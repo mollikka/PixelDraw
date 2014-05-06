@@ -1,7 +1,7 @@
 import sys
 import pygame
 
-def handle(event, tool, color_manager):
+def handle(event, tool_manager, color_manager):
 
     #print "Event:",event
 
@@ -13,8 +13,8 @@ def handle(event, tool, color_manager):
             sys.exit(0)
 
     if event.type == pygame.MOUSEBUTTONDOWN:
-        tool.left_mouse_down()
-        color_manager.left_mouse_down()
+        tool_manager.start_drawing()
+        color_manager.pick_color()
 
     if event.type == pygame.MOUSEBUTTONUP:
-        tool.left_mouse_up()
+        tool_manager.stop_drawing()

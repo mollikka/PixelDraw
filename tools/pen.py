@@ -7,12 +7,12 @@ class Pen(object):
         self.drawing = False
         self.lastpos = pygame.mouse.get_pos()
 
-    def left_mouse_down(self):
+    def start_drawing(self):
 
         self.drawing = True
         self.lastpos = pygame.mouse.get_pos()
 
-    def left_mouse_up(self):
+    def stop_drawing(self):
 
         self.drawing = False
 

@@ -21,10 +21,9 @@ class System(object):
             layer = self.window
 
             for event in pygame.event.get():
-                handle(event,tool,self.color_manager)
+                handle(event,self.tool_manager,self.color_manager)
 
-            tool.step(layer, color)
-
-            self.color_manager.draw_panel(layer)
+            self.tool_manager.step(layer, color)
+            self.color_manager.step(layer)
 
             pygame.display.flip()
