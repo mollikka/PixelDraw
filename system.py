@@ -3,6 +3,7 @@ import pygame
 from handle_input import handle
 from tool_manager import ToolManager
 from color_manager import ColorManager
+from layer_manager import LayerManager
 
 class System(object):
 
@@ -14,6 +15,7 @@ class System(object):
 
         self.tool_manager = ToolManager()
         self.color_manager = ColorManager()
+        self.layer_manager = LayerManager()
 
     def resize_window(self, size):
 
@@ -27,12 +29,18 @@ class System(object):
 
             tool = self.tool_manager.get_tool()
             color = self.color_manager.get_color()
-            layer = self.window
+            layer = self.layer_manager.get_layer()
 
             for event in pygame.event.get():
-                handle(event,self,self.tool_manager,self.color_manager)
+                handle(event,self,self.tool_manager,self.color_manager,self.layer_manager)
 
             self.tool_manager.step(layer, color)
-            self.color_manager.draw(layer)
+
+            self.layer_manager.draw_picture(self.window)
+
+            self.layer_manager.draw(self.window)
+            self.color_manager.draw(self.window)
+
+
 
             pygame.display.flip()

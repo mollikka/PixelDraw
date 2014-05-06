@@ -22,6 +22,6 @@ class Pen(object):
 
         if self.drawing:
 
-            pygame.draw.line(layer, color, mousepos, self.lastpos)
+            pygame.draw.line(layer, color, mousepos, self.lastpos, 5)
         
         self.lastpos = mousepos
