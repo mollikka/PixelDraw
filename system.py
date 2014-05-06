@@ -24,6 +24,6 @@ class System(object):
                 handle(event,self.tool_manager,self.color_manager)
 
             self.tool_manager.step(layer, color)
-            self.color_manager.step(layer)
+            self.color_manager.draw(layer)
 
             pygame.display.flip()

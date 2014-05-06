@@ -2,47 +2,61 @@ import colorsys
 
 import pygame
 
+from ui.button import Button
+
 class ColorManager(object):
 
     def __init__(self):
 
         self.color = (255,255,255)
-        self.color_picker_texture = pygame.Surface((0,0))
-        self.color_picker_box = pygame.Rect(0,0,300,200)
-        self.generate_panel()
+        self.color_picker = ColorPickerButton(self)
 
-    def get_color(self):
+    def get_color(self): return self.color
 
-        return self.color
+    def set_color(self, newValue): self.color = newValue
 
-    def generate_panel(self):
+    def draw(self,window):
 
-        w,h = self.color_picker_box.size
-
-        self.color_picker_texture = pygame.Surface((w,h))
-
-        for x in range(w):
-            for y in range(h):
-
-                color = self.coords_to_color(x,y)
-                pygame.draw.line(self.color_picker_texture, color, (x,y), (x,y))
-
-    def step(self,window):
-
-        window.blit(self.color_picker_texture, (0,0))
+        self.color_picker.draw(window)
 
     def pick_color(self):
+    
+        self.color_picker.click()
 
-        x,y = pygame.mouse.get_pos()
-        
-        if self.color_picker_box.collidepoint((x,y)):
-            self.color = self.coords_to_color(x,y)
+    @staticmethod
+    def coords_to_color(x,y,rect):
 
-    def coords_to_color(self,x,y):
-
-        w,h = self.color_picker_box.size
+        x -= rect.left
+        y -= rect.top
+        w,h = rect.size
 
         color = colorsys.hls_to_rgb(float(x)/w,float(y)/h,1)
         color = [i*255 for i in color]
         return color
+
+class ColorPickerButton(Button):
+
+    def __init__(self,color_manager):
+
+        self.color_manager = color_manager
+
+        X,Y = 100,0
+        w,h = 300,200
+
+        texture = pygame.Surface((w,h))
+        bounding_box = pygame.Rect(X,Y,w,h)
+
+        for x in range(w):
+            for y in range(h):
+
+                color = ColorManager.coords_to_color(x,y,pygame.Rect(0,0,w,h))
+                pygame.draw.line(texture, color, (x,y), (x,y))
+
+        super(ColorPickerButton, self).__init__(texture, (X,Y))
+
+    def activate(self):
+
+        x,y = pygame.mouse.get_pos()
+        color = ColorManager.coords_to_color(x,y,self.get_rect())
+        self.color_manager.set_color(color)
 
