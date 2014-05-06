@@ -8,9 +8,18 @@ class System(object):
 
     def __init__(self):
 
-        self.window = pygame.display.set_mode((640,480))
+        self.winflags = pygame.HWSURFACE|pygame.DOUBLEBUF|pygame.RESIZABLE
+        self.background = (40,40,40)
+        self.resize_window((640,480))
+
         self.tool_manager = ToolManager()
         self.color_manager = ColorManager()
+
+    def resize_window(self, size):
+
+        self.window=pygame.display.set_mode(size,self.winflags)
+        self.window.fill(self.background)
+        pygame.display.flip()
 
     def loop(self):
 
@@ -21,7 +30,7 @@ class System(object):
             layer = self.window
 
             for event in pygame.event.get():
-                handle(event,self.tool_manager,self.color_manager)
+                handle(event,self,self.tool_manager,self.color_manager)
 
             self.tool_manager.step(layer, color)
             self.color_manager.draw(layer)

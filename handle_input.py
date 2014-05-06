@@ -1,7 +1,7 @@
 import sys
 import pygame
 
-def handle(event, tool_manager, color_manager):
+def handle(event, system, tool_manager, color_manager):
 
     #print "Event:",event
 
@@ -18,3 +18,6 @@ def handle(event, tool_manager, color_manager):
 
     if event.type == pygame.MOUSEBUTTONUP:
         tool_manager.stop_drawing()
+
+    if event.type == pygame.VIDEORESIZE:
+        system.resize_window(event.dict['size'])
