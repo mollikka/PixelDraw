@@ -9,6 +9,7 @@ def handle(event, system, tool_manager, color_manager, layer_manager):
     elif event.type == pygame.MOUSEBUTTONDOWN:
         tool_manager.start_drawing()
         color_manager.pick_color()
+        layer_manager.pick_layer()
 
     elif event.type == pygame.MOUSEBUTTONUP:
         tool_manager.stop_drawing()
