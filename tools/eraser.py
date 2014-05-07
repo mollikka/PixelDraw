@@ -22,7 +22,6 @@ class Eraser(object):
 
         if self.drawing:
 
-            #TODO: this is placeholder, maybe use blending modes to erase somehow?
-            pygame.draw.circle(layer, (0,0,0,0), mousepos, 10)
+            pygame.draw.line(layer, (0,0,0,0), mousepos, self.lastpos, 10)
 
         self.lastpos = mousepos

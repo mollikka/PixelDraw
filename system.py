@@ -36,6 +36,7 @@ class System(object):
 
             self.tool_manager.step(layer, color)
 
+            self.window.fill(self.background)
             self.layer_manager.draw_picture(self.window)
 
             self.layer_manager.draw(self.window)
