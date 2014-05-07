@@ -12,6 +12,7 @@ def handle(event, system, tool_manager, color_manager, layer_manager):
 
     elif event.type == pygame.MOUSEBUTTONUP:
         tool_manager.stop_drawing()
+        tool_manager.pick_tool()
 
     elif event.type == pygame.VIDEORESIZE:
         system.resize_window(event.dict['size'])

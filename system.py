@@ -40,6 +40,7 @@ class System(object):
 
             self.layer_manager.draw(self.window)
             self.color_manager.draw(self.window)
+            self.tool_manager.draw(self.window)
 
 
 
