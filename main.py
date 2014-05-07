@@ -2,8 +2,7 @@ import sys
 
 import system
 
-if __name__ == '__main__':
-
+def main():
     try:
         import pygame
     except ImportError:
@@ -13,3 +12,6 @@ if __name__ == '__main__':
 
     v = system.System()
     v.loop()
+
+if __name__ == '__main__':
+    sys.exit(main())
