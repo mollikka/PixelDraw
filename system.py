@@ -10,7 +10,7 @@ class System(object):
     def __init__(self):
 
         self.winflags = pygame.HWSURFACE|pygame.DOUBLEBUF|pygame.RESIZABLE
-        self.background = (40,40,40)
+        self.background = (0,0,0)
         self.resize_window((640,480))
 
         self.tool_manager = ToolManager()
