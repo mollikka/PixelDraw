@@ -6,13 +6,17 @@ class LayerManager(object):
 
     def __init__(self):
 
-        self.layers = [Layer(800,600) for i in range(10)]
+        self.layers = [Layer(self,800,600) for i in range(10)]
         self.curlayer = 0
         self.layer_dialog = LayerDialog(self)
+        self.picture_position = (400,100)
+
+        self.background = pygame.Surface((800,600))
+        self.background.fill((20,20,20))
 
     def get_layer(self):
 
-        return self.layers[self.curlayer].get_surface()
+        return self.layers[self.curlayer]
 
     def set_layer(self, layer_index):
 
@@ -23,6 +27,8 @@ class LayerManager(object):
         self.layer_dialog.pick_layer()
 
     def draw_picture(self, window):
+
+        window.blit(self.background, self.picture_position)
 
         for layer in self.layers:
             layer.draw(window)
@@ -39,9 +45,10 @@ class LayerManager(object):
 
 class Layer(object):
 
-    def __init__(self, w, h):
+    def __init__(self, layer_manager, w, h):
         self.surface = pygame.Surface((w, h),pygame.SRCALPHA)
         self.surface.fill(0)
+        self.layer_manager = layer_manager
         self.location = 0,0
         self.name = "Unnamed layer"
 
@@ -51,7 +58,21 @@ class Layer(object):
 
     def draw(self, window):
 
-        window.blit(self.surface, self.location)
+        pictureloc = self.layer_manager.picture_position
+
+        loc = [self.location[i] + pictureloc[i] for i in range(2)]
+
+        window.blit(self.surface, loc)
+
+    def get_mouse_pos(self):
+
+        mouseloc = pygame.mouse.get_pos()
+        layerloc = self.location
+        pictureloc = self.layer_manager.picture_position
+
+        loc = [mouseloc[i] - layerloc[i] - pictureloc[i] for i in range(2)]
+
+        return loc
 
 class LayerDialog(object):
 
