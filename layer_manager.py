@@ -55,10 +55,15 @@ class LayerManager(object):
             Renders the whole picture to window
         '''
 
-        window.blit(self.background, self.picture_position)
-
+        pic = pygame.Surface((800,600))
+        pic.blit(self.background, (0,0))
+        
         for layer in self.layers:
-            layer.draw(window)
+            layer.draw(pic)
+
+        window.blit(pic, self.picture_position)
+        
+
 
     def pan(self, mouse_delta):
         '''
@@ -97,9 +102,7 @@ class Layer(object):
 
     def draw(self, window):
 
-        pictureloc = self.layer_manager.picture_position
-        loc = [self.location[i] + pictureloc[i] for i in range(2)]
-        window.blit(self.surface, loc)
+        window.blit(self.surface, self.location)
 
     def get_mouse_pos(self):
 
