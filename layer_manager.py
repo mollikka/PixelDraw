@@ -9,7 +9,7 @@ class LayerManager(object):
         self.layers = [Layer(self,800,600) for i in range(10)]
         self.curlayer = 0
         self.layer_dialog = LayerDialog(self)
-        self.picture_position = (400,100)
+        self.picture_position = [400,100]
 
         self.background = pygame.Surface((800,600))
         self.background.fill((20,20,20))
@@ -32,6 +32,11 @@ class LayerManager(object):
 
         for layer in self.layers:
             layer.draw(window)
+
+    def pan(self, mouse_delta):
+
+        self.picture_position[0] += mouse_delta[0]
+        self.picture_position[1] += mouse_delta[1]
 
     def draw(self, window):
 
