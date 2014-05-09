@@ -6,7 +6,7 @@ from ui.button import Button
 
 class ToolManager(object):
     '''
-        A ToolManager manages manages the image manipulation tools: let's user
+        A ToolManager manages the image manipulation tools: lets user
         pick a tool and tells the tool to do things to the picture.
     '''
 

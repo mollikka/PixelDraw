@@ -1,6 +1,10 @@
 import pygame
 
 class Button(object):
+    '''
+        A general representation of an UI element that can be clicked to do
+        something
+    '''
 
     def __init__(self, image_surface, topleft):
 
@@ -17,7 +21,7 @@ class Button(object):
             self.activate()
 
     def activate(self):
-
+        '''For a typical button, just rewrite activate'''
         pass
 
     def draw(self, window):

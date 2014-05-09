@@ -5,6 +5,10 @@ import pygame
 from ui.button import Button
 
 class ColorManager(object):
+    '''
+        A ColorManager manages the user's color choices. It lets the user
+        pick a color from a palette.
+    '''
 
     def __init__(self):
 
@@ -25,6 +29,10 @@ class ColorManager(object):
 
     @staticmethod
     def coords_to_color(x,y,rect):
+        '''
+            Gets the HLS color of the given coordinates (relative to size of
+            rect). Lightness goes down (y), hue goes right (x)
+        '''
 
         x -= rect.left
         y -= rect.top
@@ -35,6 +43,9 @@ class ColorManager(object):
         return color
 
 class ColorPickerButton(Button):
+    '''
+        A palette that sets the active color to the one user clicked on
+    '''
 
     def __init__(self,color_manager):
 

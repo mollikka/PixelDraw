@@ -2,13 +2,17 @@ import sys
 import pygame
 
 def handle(event, system, tool_manager, color_manager, layer_manager):
+    '''
+        All user input events are caught by the handler which calls other
+        modules and asks them to do things
+    '''
 
     #mouse.get_rel must only be called once a step, don't call elsewhere
-    #(it's relative to the last call)
+    #(because it's relative to the last call)
     mouse_delta = pygame.mouse.get_rel()
 
-
-    mouse_left_pressed, mouse_mid_pressed, mouse_right_pressed = pygame.mouse.get_pressed()
+    mouse_pressed = pygame.mouse.get_pressed()
+    mouse_left_pressed, mouse_mid_pressed, mouse_right_pressed = mouse_pressed
 
     if mouse_right_pressed:
         layer_manager.pan(mouse_delta)

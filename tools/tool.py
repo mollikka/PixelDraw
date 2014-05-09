@@ -6,12 +6,12 @@ class Tool(object):
         self.lastpos = None
 
     def start_drawing(self):
-
+        '''User event called by handle input'''
         self.drawing = True
         self.lastpos = None
 
     def stop_drawing(self):
-
+        '''User event called by handle input'''
         self.drawing = False
 
     def step(self, layer, color):
@@ -25,6 +25,6 @@ class Tool(object):
         self.lastpos = mousepos
 
     def action(self, surface, color, mouse_position, last_mouse_position):
-
+        '''Just rewrite action for typical tools'''
         pass
 
