@@ -5,6 +5,10 @@ from tools.eraser import Eraser
 from ui.button import Button
 
 class ToolManager(object):
+    '''
+        A ToolManager manages manages the image manipulation tools: let's user
+        pick a tool and tells the tool to do things to the picture.
+    '''
 
     def __init__(self):
 
@@ -36,6 +40,10 @@ class ToolManager(object):
         self.tool_dialog.pick_tool()
 
 class ToolDialog(object):
+    '''
+        A drawn list of tools that the user can click to pick the one they want
+        to use
+    '''
 
     def __init__(self, tool_manager):
 
@@ -57,6 +65,10 @@ class ToolDialog(object):
             button.click()
 
 class ToolButton(Button):
+    '''
+        A button in a ToolDialog. Clicking it will make the corresponding tool
+        active
+    '''
 
     def __init__(self, tool, tool_manager, texture, topleft):
 
@@ -67,5 +79,3 @@ class ToolButton(Button):
     def activate(self):
 
         self.tool_manager.set_tool(self.tool)
-
-
