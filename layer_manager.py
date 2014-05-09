@@ -88,6 +88,10 @@ class LayerManager(object):
         self.layer_dialog.draw(window)
 
 class Layer(object):
+    '''
+        A Layer is a wrapper for a Surface that is meant to be drawn on by the
+        user.
+    '''
 
     def __init__(self, layer_manager, w, h):
         self.surface = pygame.Surface((w, h),pygame.SRCALPHA)
@@ -115,6 +119,10 @@ class Layer(object):
         return loc
 
 class LayerDialog(object):
+    '''
+        A drawn list of layers that the user can click to pick the one they want
+        to edit
+    '''
 
     def __init__(self, layer_manager):
 
@@ -134,6 +142,10 @@ class LayerDialog(object):
             button.click()
 
 class LayerButton(Button):
+    '''
+        A button in a LayerDialog. Clicking it will make the corresponding layer
+        active
+    '''
 
     def __init__(self, layer, layer_manager, topleft):
 
@@ -141,7 +153,6 @@ class LayerButton(Button):
         self.layer_manager = layer_manager
 
         myfont = pygame.font.SysFont("monospace", 15)
-
         label = myfont.render("Layer: {}".format(layer.name), 1, (0,0,0))
         texture = pygame.Surface(label.get_bounding_rect().size)
         texture.fill((255,255,255))
