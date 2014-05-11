@@ -59,9 +59,14 @@ class LayerManager(object):
     
         self.picture_scale = min(self.maxscale,max(1,newValue))
 
-    def set_scale_relative(self, newValue):
+    def upscale(self):
     
-        self.set_scale(self.picture_scale + newValue)
+        self.set_scale(self.picture_scale*2)
+
+    def downscale(self):
+    
+        self.set_scale(self.picture_scale/2)
+
 
     def screen_pos_to_picture(self, loc):
         '''transform xy tuple on screen to xy tuple in the picture'''

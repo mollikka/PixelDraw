@@ -13,8 +13,6 @@ class TestLayerManager(unittest.TestCase):
         self.assertEqual(self.A.picture_scale, 1)
         self.A.set_scale(2)
         self.assertEqual(self.A.picture_scale, 2)
-        self.A.set_scale_relative(1)
-        self.assertEqual(self.A.picture_scale, 3)
         self.A.set_scale(1000)
         self.assertEqual(self.A.picture_scale, self.A.maxscale)
         self.A.set_scale(0)
