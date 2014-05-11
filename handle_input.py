@@ -27,6 +27,13 @@ def handle(event, system, tool_manager, color_manager, layer_manager):
             tool_manager.start_drawing()
             color_manager.pick_color()
             layer_manager.pick_layer()
+        #scroll up
+        elif event.button == 4:
+            layer_manager.set_scale_relative(1)
+        #scroll down
+        elif event.button == 5:
+            layer_manager.set_scale_relative(-1)
+
 
     elif event.type == pygame.MOUSEBUTTONUP:
         #left button

@@ -44,7 +44,7 @@ class System(object):
 
             #clear the screen
             self.window.fill(self.background)
-            self.layer_manager.draw_picture(self.window)
+            self.layer_manager.draw_picture_to_screen(self.window)
 
             #ask each manager object to draw the stuff related to their module
             self.layer_manager.draw(self.window)

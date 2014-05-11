@@ -27,6 +27,8 @@ class LayerManager(object):
 
         #camera panning position
         self.picture_position = [400,100]
+        #camera zoom
+        self.picture_scale = 1
 
     def get_layer(self):
         '''
@@ -50,29 +52,77 @@ class LayerManager(object):
 
         self.layer_dialog.pick_layer()
 
-    def draw_picture(self, window):
+    def draw_picture(self, surface):
         '''
-            Renders the whole picture to window
+            Render the picture (= all the layers) to surface
         '''
 
+        for layer in self.layers:
+            layer.draw(surface)
+
+    def set_scale(self, newValue):
+    
+        self.picture_scale = min(32,max(1,newValue))
+
+    def set_scale_relative(self, newValue):
+    
+        self.set_scale(self.picture_scale + newValue)
+
+    def screen_pos_to_picture(self, loc):
+        '''transform xy tuple on screen to xy tuple in the picture'''
+
+        pictureloc = self.picture_position
+        picturescale = self.picture_scale
+
+        loc = [float(loc[i])/picturescale - pictureloc[i] for i in range(2)]
+
+        return loc
+
+    def picture_pos_to_screen(self, loc):
+        '''transform xy tuple in the picture to xy tuple on screen'''
+
+        pictureloc = self.picture_position
+        picturescale = self.picture_scale
+
+        loc = [(loc[i]+ pictureloc[i])*picturescale  for i in range(2)]
+
+        return loc
+
+    def draw_picture_to_screen(self, window):
+        '''
+            Renders the whole picture to window. Applies picture_position and
+            background color
+        '''
+        scale = self.picture_scale
+        pos = [int(i) for i in self.picture_position]
+
+        #draw the natural 1:1 pixel image
         pic = pygame.Surface((800,600))
         pic.blit(self.background, (0,0))
-        
-        for layer in self.layers:
-            layer.draw(pic)
+        self.draw_picture(pic)
 
-        window.blit(pic, self.picture_position)
-        
+        #find the area in picture that shows up on the screen
+        spic_topleft = self.screen_pos_to_picture((0,0))
+        spic_botright = self.screen_pos_to_picture(window.get_size())
+        spic_size = [spic_botright[i] - spic_topleft[i] for i in range(2)]
 
+        #create a surface that is fills the screen in picture coordinates
+        spic = pygame.Surface(spic_size, pygame.SRCALPHA)
+        spic.blit(pic, pos)
+
+        #create an upscaled surface that will actually fill the screen
+        scaledpic = pygame.transform.scale(spic, window.get_size())
+        window.blit(scaledpic, (0,0))
 
     def pan(self, mouse_delta):
         '''
             Input handling event for panning the picture,
             called by handle_input
         '''
+        scale = self.picture_scale
 
-        self.picture_position[0] += mouse_delta[0]
-        self.picture_position[1] += mouse_delta[1]
+        self.picture_position[0] += mouse_delta[0]/float(scale)
+        self.picture_position[1] += mouse_delta[1]/float(scale)
 
     def draw(self, window):
         '''
@@ -97,7 +147,6 @@ class Layer(object):
         self.surface = pygame.Surface((w, h),pygame.SRCALPHA)
         self.surface.fill(0)
         self.layer_manager = layer_manager
-        self.location = 0,0
         self.name = "Unnamed layer"
 
     def get_surface(self):
@@ -106,15 +155,13 @@ class Layer(object):
 
     def draw(self, window):
 
-        window.blit(self.surface, self.location)
+        window.blit(self.surface, (0,0))
 
     def get_mouse_pos(self):
 
         mouseloc = pygame.mouse.get_pos()
-        layerloc = self.location
-        pictureloc = self.layer_manager.picture_position
 
-        loc = [mouseloc[i] - layerloc[i] - pictureloc[i] for i in range(2)]
+        loc = self.layer_manager.screen_pos_to_picture(mouseloc)
 
         return loc
 
