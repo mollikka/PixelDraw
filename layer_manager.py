@@ -29,6 +29,7 @@ class LayerManager(object):
         self.picture_position = [400,100]
         #camera zoom
         self.picture_scale = 1
+        self.maxscale = 64
 
     def get_layer(self):
         '''
@@ -62,7 +63,7 @@ class LayerManager(object):
 
     def set_scale(self, newValue):
     
-        self.picture_scale = min(32,max(1,newValue))
+        self.picture_scale = min(self.maxscale,max(1,newValue))
 
     def set_scale_relative(self, newValue):
     
