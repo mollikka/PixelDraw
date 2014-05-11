@@ -2,6 +2,7 @@ import pygame
 
 from tools.pen import Pen
 from tools.eraser import Eraser
+from tools.pixel import Pixel
 from ui.button import Button
 
 class ToolManager(object):
@@ -52,6 +53,7 @@ class ToolDialog(object):
         self.toolbuttons = [
             ToolButton(Pen, tool_manager, load('images/pen.png'),(0,0)),
             ToolButton(Eraser, tool_manager, load('images/eraser.png'),(0,50)),
+            ToolButton(Pixel, tool_manager, load('images/pixel.png'),(0,100)),
         ]
 
     def draw(self, window):
