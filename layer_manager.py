@@ -32,16 +32,10 @@ class LayerManager(object):
         self.maxscale = 64
 
     def get_layer(self):
-        '''
-            Returns the layer object that the user has chosen for editing
-        '''
 
         return self.layers[self.curlayer]
 
     def set_layer(self, layer_index):
-        '''
-            Changes the active editing layer
-        '''
 
         self.curlayer = layer_index
 
@@ -55,7 +49,7 @@ class LayerManager(object):
 
     def draw_picture(self, surface):
         '''
-            Render the picture (= all the layers) to surface
+            Render the 1:1 pixel picture (= all the layers) to surface
         '''
 
         for layer in self.layers:
