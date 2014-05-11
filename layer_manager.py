@@ -57,7 +57,19 @@ class LayerManager(object):
 
     def set_scale(self, newValue):
     
+        mpos = pygame.mouse.get_pos()
+        
+        #move corner to old mouse location
+        focus = self.screen_pos_to_picture(mpos)
+        pos = self.picture_position
+        self.picture_position = [pos[i] + focus[i] for i in range(2)]
+        
+        #scale
         self.picture_scale = min(self.maxscale,max(1,newValue))
+        
+        #move corner to new mouse location
+        focus = self.screen_pos_to_picture(mpos)
+        self.picture_position = [pos[i] + focus[i] for i in range(2)]
 
     def upscale(self):
     
