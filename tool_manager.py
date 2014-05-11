@@ -16,7 +16,7 @@ class ToolManager(object):
         self.tool = Pen()
         self.tool_dialog = ToolDialog(self)
 
-    def get_tool(self): self.tool
+    def get_tool(self): return self.tool
 
     def set_tool(self, newValue): self.tool = newValue
 
