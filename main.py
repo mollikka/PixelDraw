@@ -12,7 +12,7 @@ def main():
 
     pygame.init()
     v = system.System()
-    v.loop()
+    while True: v.step()
 
 if __name__ == '__main__':
     sys.exit(main())

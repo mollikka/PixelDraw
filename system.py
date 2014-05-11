@@ -28,28 +28,26 @@ class System(object):
         self.window.fill(self.background)
         pygame.display.flip()
 
-    def loop(self):
+    def step(self):
 
-        while True:
+        tool = self.tool_manager.get_tool()
+        color = self.color_manager.get_color()
+        layer = self.layer_manager.get_layer()
 
-            tool = self.tool_manager.get_tool()
-            color = self.color_manager.get_color()
-            layer = self.layer_manager.get_layer()
+        #handle events
+        for event in pygame.event.get():
+            handle(event,self,self.tool_manager,self.color_manager,self.layer_manager)
 
-            #handle events
-            for event in pygame.event.get():
-                handle(event,self,self.tool_manager,self.color_manager,self.layer_manager)
+        self.tool_manager.step(layer, color)
 
-            self.tool_manager.step(layer, color)
+        #clear the screen
+        self.window.fill(self.background)
+        self.layer_manager.draw_picture_to_screen(self.window)
 
-            #clear the screen
-            self.window.fill(self.background)
-            self.layer_manager.draw_picture_to_screen(self.window)
+        #ask each manager object to draw the stuff related to their module
+        self.layer_manager.draw(self.window)
+        self.color_manager.draw(self.window)
+        self.tool_manager.draw(self.window)
 
-            #ask each manager object to draw the stuff related to their module
-            self.layer_manager.draw(self.window)
-            self.color_manager.draw(self.window)
-            self.tool_manager.draw(self.window)
-
-            #update the screen
-            pygame.display.flip()
+        #update the screen
+        pygame.display.flip()
