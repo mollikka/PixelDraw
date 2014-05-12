@@ -86,7 +86,7 @@ class LayerManager(object):
         pictureloc = self.picture_position
         picturescale = self.picture_scale
 
-        loc = [float(loc[i])/picturescale - pictureloc[i] for i in range(2)]
+        loc = [int(loc[i]/picturescale - pictureloc[i]) for i in range(2)]
 
         return loc
 
@@ -96,7 +96,7 @@ class LayerManager(object):
         pictureloc = self.picture_position
         picturescale = self.picture_scale
 
-        loc = [(loc[i]+ pictureloc[i])*picturescale  for i in range(2)]
+        loc = [int((loc[i]+ pictureloc[i])*picturescale)  for i in range(2)]
 
         return loc
 
@@ -106,7 +106,7 @@ class LayerManager(object):
             background color
         '''
         scale = self.picture_scale
-        pos = [int(i) for i in self.picture_position]
+        pos = self.picture_position
 
         #draw the natural 1:1 pixel image
         pic = pygame.Surface((800,600))
@@ -116,14 +116,14 @@ class LayerManager(object):
         #find the area in picture that shows up on the screen
         spic_topleft = self.screen_pos_to_picture((0,0))
         spic_botright = self.screen_pos_to_picture(window.get_size())
-        spic_size = [spic_botright[i] - spic_topleft[i] for i in range(2)]
-
+        spic_size = [spic_botright[i] - spic_topleft[i] +1 for i in range(2)] #+1 because that prevents a < 1 pixel gap from being drawn when zoomed
         #create a surface that is fills the screen in picture coordinates
         spic = pygame.Surface(spic_size, pygame.SRCALPHA)
         spic.blit(pic, pos)
 
         #create an upscaled surface that will actually fill the screen
-        scaledpic = pygame.transform.scale(spic, window.get_size())
+        spic_size_scaled = [spic_size[i]*scale for i in range(2)]
+        scaledpic = pygame.transform.scale(spic, spic_size_scaled)
         window.blit(scaledpic, (0,0))
 
     def pan(self, mouse_delta):
