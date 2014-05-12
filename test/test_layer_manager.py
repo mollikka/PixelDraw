@@ -24,4 +24,4 @@ class TestLayerManager(unittest.TestCase):
         loc = self.A.picture_pos_to_screen((0,0))
         self.assertEqual(loc,[400,400])
         loc = self.A.screen_pos_to_picture((50,50))
-        self.assertEqual(loc,[-87.5,-87.5])
+        self.assertEqual(loc,[-88,-88])
