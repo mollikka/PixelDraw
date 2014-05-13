@@ -1,5 +1,3 @@
-import colorsys
-
 import pygame
 
 from ui.color_dialog import ColorPickerButton
@@ -26,19 +24,4 @@ class ColorManager(object):
     def pick_color(self):
     
         self.color_picker.click()
-
-    @staticmethod
-    def coords_to_color(x,y,rect):
-        '''
-            Gets the HLS color of the given coordinates (relative to size of
-            rect). Lightness goes down (y), hue goes right (x)
-        '''
-
-        x -= rect.left
-        y -= rect.top
-        w,h = rect.size
-
-        color = colorsys.hls_to_rgb(float(x)/w,float(y)/h,1)
-        color = [i*255 for i in color]
-        return color
 
