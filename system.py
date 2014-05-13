@@ -4,6 +4,7 @@ from handle_input import handle
 from tool_manager import ToolManager
 from color_manager import ColorManager
 from layer_manager import LayerManager
+from history_manager import HistoryManager
 
 class System(object):
 
@@ -18,6 +19,7 @@ class System(object):
         self.tool_manager = ToolManager()
         self.color_manager = ColorManager()
         self.layer_manager = LayerManager()
+        self.history_manager = HistoryManager(self.layer_manager)
 
     def resize_window(self, size):
         '''
@@ -36,7 +38,7 @@ class System(object):
 
         #handle events
         for event in pygame.event.get():
-            handle(event,self,self.tool_manager,self.color_manager,self.layer_manager)
+            handle(event,self,self.tool_manager,self.color_manager,self.layer_manager,self.history_manager)
 
         self.tool_manager.step(layer, color)
 

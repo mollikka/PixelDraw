@@ -165,6 +165,14 @@ class Layer(object):
 
         return self.surface
 
+    def copy(self):
+
+        w,h = self.surface.get_size()
+        clone = Layer(self.layer_manager, w, h)
+        clone.surface = self.surface.copy()
+        clone.name = self.name
+        return clone
+
     def draw(self, window):
 
         window.blit(self.surface, (0,0))

@@ -1,7 +1,8 @@
 import sys
 import pygame
 
-def handle(event, system, tool_manager, color_manager, layer_manager):
+def handle(event, system, tool_manager, color_manager, layer_manager,
+            history_manager):
     '''
         All user input events are caught by the handler which calls other
         modules and asks them to do things
@@ -11,10 +12,13 @@ def handle(event, system, tool_manager, color_manager, layer_manager):
     #(because it's relative to the last call)
     mouse_delta = pygame.mouse.get_rel()
 
-    #MOUSE HOLD
 
     mouse_pressed = pygame.mouse.get_pressed()
     mouse_left_pressed, mouse_mid_pressed, mouse_right_pressed = mouse_pressed
+
+    mod_pressed = pygame.key.get_mods()
+
+    #MOUSE HOLD
 
     if mouse_right_pressed:
         layer_manager.pan(mouse_delta)
@@ -27,6 +31,7 @@ def handle(event, system, tool_manager, color_manager, layer_manager):
             tool_manager.start_drawing()
             color_manager.pick_color()
             layer_manager.pick_layer()
+            history_manager.push_history()
         #scroll up
         elif event.button == 4:
             layer_manager.upscale()
@@ -46,6 +51,11 @@ def handle(event, system, tool_manager, color_manager, layer_manager):
     elif event.type == pygame.KEYDOWN:
         if event.key == pygame.K_ESCAPE:
             sys.exit(0)
+            
+        #ctrl modifier
+        if mod_pressed & pygame.KMOD_CTRL:
+            if event.key == pygame.K_z:
+                history_manager.pull_history()
 
     #SYSTEM EVENTS
 
