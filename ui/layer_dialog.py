@@ -14,8 +14,7 @@ class LayerDialog(object):
 
         self.layerbuttons = []
         for i in range(len(layer_manager.layers)):
-            layer = layer_manager.layers[i]
-            self.layerbuttons.append(LayerButton(layer, layer_manager, (500,30+i*20)))
+            self.layerbuttons.append(LayerButton(i, layer_manager, (500,30+i*20)))
 
     def draw(self, window):
 
@@ -33,13 +32,14 @@ class LayerButton(Button):
         active
     '''
 
-    def __init__(self, layer, layer_manager, topleft):
+    def __init__(self, layerindex, layer_manager, topleft):
 
-        self.layer = layer
+        layername = layer_manager.layers[layerindex].name
+        self.layerindex = layerindex
         self.layer_manager = layer_manager
 
         myfont = pygame.font.SysFont("monospace", 15)
-        label = myfont.render("Layer: {}".format(layer.name), 1, (0,0,0))
+        label = myfont.render("Layer: {}".format(layername), 1, (0,0,0))
         texture = pygame.Surface(label.get_bounding_rect().size)
         texture.fill((255,255,255))
         texture.blit(label,(-2,-2))
@@ -48,5 +48,4 @@ class LayerButton(Button):
 
     def activate(self):
 
-        i = self.layer_manager.layers.index(self.layer)
-        self.layer_manager.set_layer(i)
+        self.layer_manager.set_layer(self.layerindex)
