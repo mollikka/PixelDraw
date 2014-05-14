@@ -28,7 +28,7 @@ def handle(event, system, tool_manager, color_manager, layer_manager,
             tool_manager.start_drawing()
             color_manager.pick_color()
             layer_manager.pick_layer()
-            menubutton.activate()
+            menubutton.click()
         #scroll up
         elif event.button == 4:
             layer_manager.upscale()
