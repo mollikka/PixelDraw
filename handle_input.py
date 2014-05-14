@@ -1,7 +1,8 @@
 import sys
 import pygame
 
-def handle(event, system, tool_manager, color_manager, layer_manager):
+def handle(event, system, tool_manager, color_manager, layer_manager,
+             menubutton):
     '''
         All user input events are caught by the handler which calls other
         modules and asks them to do things
@@ -27,6 +28,7 @@ def handle(event, system, tool_manager, color_manager, layer_manager):
             tool_manager.start_drawing()
             color_manager.pick_color()
             layer_manager.pick_layer()
+            menubutton.activate()
         #scroll up
         elif event.button == 4:
             layer_manager.upscale()

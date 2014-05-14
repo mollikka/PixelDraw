@@ -1,7 +1,8 @@
 import tkFileDialog
 
-from Tkinter import *
+from Tkinter import Tk
 from tools.tool import Tool
+from ui.button import Button
 
 class MenuPopup(object):
 
