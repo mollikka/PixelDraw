@@ -5,6 +5,9 @@ from tool_manager import ToolManager
 from color_manager import ColorManager
 from layer_manager import LayerManager
 
+from tools.menu import MenuPopup
+from tools.menu import MenuButton
+
 class System(object):
 
     def __init__(self):
@@ -18,6 +21,8 @@ class System(object):
         self.tool_manager = ToolManager()
         self.color_manager = ColorManager()
         self.layer_manager = LayerManager()
+
+        menubutton = MenuButton(MenuPopup, self.tool_manager, pygame.image.load('images/menu.png'),(0,150))
 
     def resize_window(self, size):
         '''

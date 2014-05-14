@@ -8,6 +8,7 @@ class Button(object):
 
     def __init__(self, image_surface, topleft):
 
+        super(Button, self).__init__()
         self.texture = image_surface
         self.rect = self.texture.get_rect()
         self.rect.move_ip(topleft)
