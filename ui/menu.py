@@ -48,10 +48,10 @@ class MenuPopup(object):
 
 class MenuButton(Ownbutton):
 
-    def __init__(self, tool, tool_manager, texture, topleft, layer_manager):
+    def __init__(self, ui_manager):
 
-        super(MenuButton, self).__init__(texture, topleft)
-        self.layers = layer_manager
+        super(MenuButton, self).__init__(image.load('images/menu.png'),(0,150))
+        self.layers = ui_manager.layer_manager
 
     def activate(self):
 

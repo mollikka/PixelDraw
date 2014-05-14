@@ -6,8 +6,7 @@ from ui.tool_dialog import ToolDialog
 from ui.layer_dialog import LayerDialog
 from ui.color_dialog import ColorPickerButton
 
-from tools.menu import MenuPopup
-from tools.menu import MenuButton
+from ui.menu import MenuButton
 
 
 class UIManager(object):
@@ -27,7 +26,7 @@ class UIManager(object):
             LayerDialog(self),
             ToolDialog(self),
             ColorPickerButton(self),
-            MenuButton(MenuPopup, self.tool_manager, pygame.image.load('images/menu.png'),(0,150), self.layer_manager),
+            MenuButton(self),
         ]
 
     def draw(self, window):
