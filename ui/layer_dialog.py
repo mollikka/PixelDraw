@@ -8,7 +8,9 @@ class LayerDialog(object):
         to edit
     '''
 
-    def __init__(self, layer_manager):
+    def __init__(self, ui_manager):
+
+        layer_manager = ui_manager.layer_manager
 
         self.layerbuttons = []
         for i in range(len(layer_manager.layers)):

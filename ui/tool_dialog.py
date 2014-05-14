@@ -11,7 +11,9 @@ class ToolDialog(object):
         to use
     '''
 
-    def __init__(self, tool_manager):
+    def __init__(self, ui_manager):
+
+        tool_manager = ui_manager.tool_manager
 
         load = pygame.image.load
 

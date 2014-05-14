@@ -9,9 +9,9 @@ class ColorPickerButton(Button):
         A palette that sets the active color to the one user clicked on
     '''
 
-    def __init__(self,color_manager):
+    def __init__(self, ui_manager):
 
-        self.color_manager = color_manager
+        self.color_manager = ui_manager.color_manager
 
         X,Y = 100,0
         w,h = 300,200

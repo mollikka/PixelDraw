@@ -1,6 +1,7 @@
 import sys
 import pygame
 
+#Ideally this should be the only place outside ui folder importing ui
 from ui.tool_dialog import ToolDialog
 from ui.layer_dialog import LayerDialog
 from ui.color_dialog import ColorPickerButton
@@ -19,9 +20,9 @@ class UIManager(object):
         self.history_manager = history_manager
 
         self.ui_elements = [
-            LayerDialog(layer_manager),
-            ToolDialog(tool_manager),
-            ColorPickerButton(color_manager),
+            LayerDialog(self),
+            ToolDialog(self),
+            ColorPickerButton(self),
         ]
 
     def draw(self, window):
