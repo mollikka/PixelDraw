@@ -17,6 +17,11 @@ class UIManager(object):
 
     def __init__(self, tool_manager, color_manager, layer_manager, history_manager):
 
+        #initialize the window
+        self.winflags = pygame.HWSURFACE|pygame.DOUBLEBUF|pygame.RESIZABLE
+        self.background = (0,0,0)
+        self.resize_window((640,480))
+
         self.tool_manager = tool_manager
         self.color_manager = color_manager
         self.layer_manager = layer_manager
@@ -29,19 +34,37 @@ class UIManager(object):
             MenuButton(self),
         ]
 
-    def draw(self, window):
+    def resize_window(self, size):
+        '''
+            Initialize or resize the application window. Size as tuple (w,h)
+        '''
 
+        self.window=pygame.display.set_mode(size,self.winflags)
+        self.window.fill(self.background)
+        pygame.display.flip()
+
+    def draw(self):
+
+        #clear the screen
+        self.window.fill(self.background)
+
+        #draw the picture
+        self.layer_manager.draw_picture_to_screen(self.window)
+
+        #draw the ui elements
         for element in self.ui_elements:
-            element.draw(window)
+            element.draw(self.window)
 
-
+        #show the current layer (this is a hack)
         myfont = pygame.font.SysFont("monospace", 15)
-
-        pygame.draw.rect(window, (255,255,255), pygame.Rect(500,0,200,20))
+        pygame.draw.rect(self.window, (255,255,255), pygame.Rect(500,0,200,20))
         label = myfont.render("Current layer {}".format(self.layer_manager.curlayer), 1, (0,0,0))
-        window.blit(label, (500,0))
+        self.window.blit(label, (500,0))
 
-    def handle(self, event, system):
+        #update the screen
+        pygame.display.flip()
+
+    def handle(self, event):
         '''
             All user input events are caught by the handler which calls other
             modules and asks them to do things
@@ -101,5 +124,5 @@ class UIManager(object):
             sys.exit(0)
 
         elif event.type == pygame.VIDEORESIZE:
-            system.resize_window(event.dict['size'])
+            self.resize_window(event.dict['size'])
 
