@@ -19,7 +19,8 @@ class UIManager(object):
         self.history_manager = history_manager
 
         self.ui_elements = [
-            LayerDialog(layer_manager)
+            LayerDialog(layer_manager),
+            ToolDialog(tool_manager),
         ]
 
     def draw(self, window):
@@ -77,7 +78,6 @@ class UIManager(object):
             #left button
             if event.button == 1:
                 self.tool_manager.stop_drawing()
-                self.tool_manager.pick_tool()
 
         #KEY PRESS
 

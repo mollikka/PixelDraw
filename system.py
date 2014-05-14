@@ -54,7 +54,6 @@ class System(object):
 
         #ask each manager object to draw the stuff related to their module
         self.color_manager.draw(self.window)
-        self.tool_manager.draw(self.window)
         self.ui_manager.draw(self.window)
         #update the screen
         pygame.display.flip()

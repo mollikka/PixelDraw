@@ -26,7 +26,7 @@ class ToolDialog(object):
         for button in self.toolbuttons:
             button.draw(window)
 
-    def pick_tool(self):
+    def click(self):
 
         for button in self.toolbuttons:
             button.click()

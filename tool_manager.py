@@ -1,6 +1,5 @@
 import pygame
 
-from ui.tool_dialog import ToolDialog
 from tools.pen import Pen as DefaultTool
 
 class ToolManager(object):
@@ -12,7 +11,6 @@ class ToolManager(object):
     def __init__(self):
 
         self.tool = DefaultTool()
-        self.tool_dialog = ToolDialog(self)
 
     def get_tool(self): return self.tool
 
@@ -22,10 +20,6 @@ class ToolManager(object):
 
         self.tool.step(layer, color)
 
-    def draw(self, window):
-
-        self.tool_dialog.draw(window)
-
     def start_drawing(self):
 
         self.tool.start_drawing()
@@ -33,7 +27,3 @@ class ToolManager(object):
     def stop_drawing(self):
 
         self.tool.stop_drawing()
-
-    def pick_tool(self):
-    
-        self.tool_dialog.pick_tool()
