@@ -52,8 +52,7 @@ class System(object):
         self.window.fill(self.background)
         self.layer_manager.draw_picture_to_screen(self.window)
 
-        #ask each manager object to draw the stuff related to their module
-        self.color_manager.draw(self.window)
+        #ask ui manager to draw the user interface
         self.ui_manager.draw(self.window)
         #update the screen
         pygame.display.flip()
