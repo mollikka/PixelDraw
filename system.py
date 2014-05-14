@@ -1,10 +1,10 @@
 import pygame
 
-from handle_input import handle
 from tool_manager import ToolManager
 from color_manager import ColorManager
 from layer_manager import LayerManager
 from history_manager import HistoryManager
+from ui_manager import UIManager
 
 class System(object):
 
@@ -20,6 +20,12 @@ class System(object):
         self.color_manager = ColorManager()
         self.layer_manager = LayerManager()
         self.history_manager = HistoryManager(self.layer_manager)
+
+        #initialize the user interface
+        self.ui_manager = UIManager(self.tool_manager,
+                                    self.color_manager,
+                                    self.layer_manager,
+                                    self.history_manager)
 
     def resize_window(self, size):
         '''
@@ -38,7 +44,7 @@ class System(object):
 
         #handle events
         for event in pygame.event.get():
-            handle(event,self,self.tool_manager,self.color_manager,self.layer_manager,self.history_manager)
+            self.ui_manager.handle(event,self)
 
         self.tool_manager.step(layer, color)
 
@@ -47,9 +53,8 @@ class System(object):
         self.layer_manager.draw_picture_to_screen(self.window)
 
         #ask each manager object to draw the stuff related to their module
-        self.layer_manager.draw(self.window)
         self.color_manager.draw(self.window)
         self.tool_manager.draw(self.window)
-
+        self.ui_manager.draw(self.window)
         #update the screen
         pygame.display.flip()

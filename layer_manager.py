@@ -1,7 +1,5 @@
 import pygame
 
-from ui.layer_dialog import LayerDialog
-
 class LayerManager(object):
     '''
         A LayerManager sets up a system of layers that can store pictures and
@@ -26,9 +24,6 @@ class LayerManager(object):
         self.background = pygame.Surface((w,h))
         self.background.fill((20,20,20))
 
-        #a graphical UI for choosing a layer
-        self.layer_dialog = LayerDialog(self)
-
         #camera zoom
         self.picture_scale = 1
         self.maxscale = 64
@@ -40,14 +35,6 @@ class LayerManager(object):
     def set_layer(self, layer_index):
 
         self.curlayer = layer_index
-
-    def pick_layer(self):
-        '''
-            Input handling event for clicking the layer dialog,
-            called by handle_input
-        '''
-
-        self.layer_dialog.pick_layer()
 
     def draw_picture(self, surface):
         '''
@@ -137,19 +124,6 @@ class LayerManager(object):
 
         self.bounding_box.left += mouse_delta[0]/float(scale)
         self.bounding_box.top += mouse_delta[1]/float(scale)
-
-    def draw(self, window):
-        '''
-            Renders the layer dialog elements to window
-        '''
-
-        myfont = pygame.font.SysFont("monospace", 15)
-
-        pygame.draw.rect(window, (255,255,255), pygame.Rect(500,0,200,20))
-        label = myfont.render("Current layer {}".format(self.curlayer), 1, (0,0,0))
-        window.blit(label, (500,0))
-
-        self.layer_dialog.draw(window)
 
 class Layer(object):
     '''

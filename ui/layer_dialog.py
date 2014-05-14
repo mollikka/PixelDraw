@@ -20,7 +20,7 @@ class LayerDialog(object):
         for button in self.layerbuttons:
             button.draw(window)
 
-    def pick_layer(self):
+    def click(self):
 
         for button in self.layerbuttons:
             button.click()
