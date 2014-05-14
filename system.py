@@ -22,7 +22,7 @@ class System(object):
         self.color_manager = ColorManager()
         self.layer_manager = LayerManager()
 
-        self.menubutton = MenuButton(MenuPopup, self.tool_manager, pygame.image.load('images/menu.png'),(0,150))
+        self.menubutton = MenuButton(MenuPopup, self.tool_manager, pygame.image.load('images/menu.png'),(0,150), self.layer_manager)
 
     def resize_window(self, size):
         '''
