@@ -15,18 +15,20 @@ class LayerManager(object):
 
     def __init__(self):
 
-        self.layers = [Layer(self,800,600) for i in range(10)]
+        self.bounding_box = pygame.Rect(400,100,800,600)
+
+        w,h = self.bounding_box.size
+
+        self.layers = [Layer(self,w,h) for i in range(10)]
         self.curlayer = 0
 
         #background surface is shown if all layers are transparent
-        self.background = pygame.Surface((800,600))
+        self.background = pygame.Surface((w,h))
         self.background.fill((20,20,20))
 
         #a graphical UI for choosing a layer
         self.layer_dialog = LayerDialog(self)
 
-        #camera panning position
-        self.picture_position = [400,100]
         #camera zoom
         self.picture_scale = 1
         self.maxscale = 64
@@ -61,15 +63,15 @@ class LayerManager(object):
         
         #move corner to old mouse location
         focus = self.screen_pos_to_picture(mpos)
-        pos = self.picture_position
-        self.picture_position = [pos[i] + focus[i] for i in range(2)]
+        pos = self.bounding_box.topleft
+        self.bounding_box.topleft = [pos[i] + focus[i] for i in range(2)]
         
         #scale
         self.picture_scale = min(self.maxscale,max(1,newValue))
         
         #move corner to new mouse location
         focus = self.screen_pos_to_picture(mpos)
-        self.picture_position = [pos[i] + focus[i] for i in range(2)]
+        self.bounding_box.topleft = [pos[i] + focus[i] for i in range(2)]
 
     def upscale(self):
     
@@ -83,7 +85,7 @@ class LayerManager(object):
     def screen_pos_to_picture(self, loc):
         '''transform xy tuple on screen to xy tuple in the picture'''
 
-        pictureloc = self.picture_position
+        pictureloc = self.bounding_box.topleft
         picturescale = self.picture_scale
 
         loc = [int(loc[i]/picturescale - pictureloc[i]) for i in range(2)]
@@ -93,7 +95,7 @@ class LayerManager(object):
     def picture_pos_to_screen(self, loc):
         '''transform xy tuple in the picture to xy tuple on screen'''
 
-        pictureloc = self.picture_position
+        pictureloc = self.bounding_box.topleft
         picturescale = self.picture_scale
 
         loc = [int((loc[i]+ pictureloc[i])*picturescale)  for i in range(2)]
@@ -106,7 +108,7 @@ class LayerManager(object):
             background color
         '''
         scale = self.picture_scale
-        pos = self.picture_position
+        pos = self.bounding_box.topleft
 
         #draw the natural 1:1 pixel image
         pic = pygame.Surface((800,600))
@@ -133,8 +135,8 @@ class LayerManager(object):
         '''
         scale = self.picture_scale
 
-        self.picture_position[0] += mouse_delta[0]/float(scale)
-        self.picture_position[1] += mouse_delta[1]/float(scale)
+        self.bounding_box.left += mouse_delta[0]/float(scale)
+        self.bounding_box.top += mouse_delta[1]/float(scale)
 
     def draw(self, window):
         '''

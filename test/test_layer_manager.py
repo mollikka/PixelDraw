@@ -20,7 +20,8 @@ class TestLayerManager(unittest.TestCase):
 
     def test_coordinate_transformations(self):
         self.A.set_scale(4)
-        self.A.picture_position = [100,100]
+        self.A.bounding_box.top = 100
+        self.A.bounding_box.left = 100
         loc = self.A.picture_pos_to_screen((0,0))
         self.assertEqual(loc,[400,400])
         loc = self.A.screen_pos_to_picture((50,50))
