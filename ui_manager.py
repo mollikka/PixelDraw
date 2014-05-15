@@ -6,6 +6,7 @@ from ui.tool_dialog import ToolDialog
 from ui.layer_dialog import LayerDialog
 from ui.color_dialog import ColorPickerDialog
 from ui.menu_dialog import MenuDialog
+from ui.minimap_dialog import MinimapDialog
 
 class UIManager(object):
     '''
@@ -29,7 +30,8 @@ class UIManager(object):
             LayerDialog(self, pygame.Rect(500,0,300,200)),
             ToolDialog(self, pygame.Rect(0,0,50,300)),
             ColorPickerDialog(self, pygame.Rect(100,0,320,220)),
-            MenuDialog(self, pygame.Rect(0,320,50,100))
+            MenuDialog(self, pygame.Rect(0,320,50,100)),
+            MinimapDialog(self, pygame.Rect(200,200,100,100)),
         ]
 
         self.focused_element = None
