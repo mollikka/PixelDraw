@@ -10,11 +10,6 @@ class System(object):
 
     def __init__(self):
 
-        #initialize the window
-        self.winflags = pygame.HWSURFACE|pygame.DOUBLEBUF|pygame.RESIZABLE
-        self.background = (0,0,0)
-        self.resize_window((640,480))
-
         #initialize the manager objects for each module
         self.tool_manager = ToolManager()
         self.color_manager = ColorManager()
@@ -27,15 +22,6 @@ class System(object):
                                     self.layer_manager,
                                     self.history_manager)
 
-    def resize_window(self, size):
-        '''
-            Initialize or resize the application window. Size as tuple (w,h)
-        '''
-
-        self.window=pygame.display.set_mode(size,self.winflags)
-        self.window.fill(self.background)
-        pygame.display.flip()
-
     def step(self):
 
         tool = self.tool_manager.get_tool()
@@ -44,17 +30,10 @@ class System(object):
 
         #handle events
         for event in pygame.event.get():
+            self.ui_manager.handle(event)
 
-            self.ui_manager.handle(event,self)
-
+        #tools need a step to draw things
         self.tool_manager.step(layer, color)
 
-        #clear the screen
-        self.window.fill(self.background)
-        self.layer_manager.draw_picture_to_screen(self.window)
-
         #ask ui manager to draw the user interface
-        self.ui_manager.draw(self.window)
-
-        #update the screen
-        pygame.display.flip()
+        self.ui_manager.draw()
