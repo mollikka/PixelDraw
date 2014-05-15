@@ -32,6 +32,8 @@ class UIManager(object):
             MenuDialog(self, pygame.Rect(0,320,50,100))
         ]
 
+        self.focused_element = None
+
     def resize_window(self, size):
         '''
             Initialize or resize the application window. Size as tuple (w,h)
@@ -64,8 +66,28 @@ class UIManager(object):
 
     def click(self):
 
-            for element in self.ui_elements:
-                if element.click(): break
+        if self.focused_element:
+            self.focused_element.click()
+
+    def pan(self, mouse_delta):
+
+        if self.focused_element:
+            self.focused_element.pan(mouse_delta)
+        else:
+            self.layer_manager.pan(mouse_delta)
+
+    def pick_focused_element(self):
+
+        for element in self.ui_elements:
+            if element.hit(): 
+                self.focused_element = element
+                return
+
+        self.clear_focused_element()
+
+    def clear_focused_element(self):
+
+        self.focused_element = None
 
     def handle(self, event):
         '''
@@ -83,19 +105,24 @@ class UIManager(object):
 
         mod_pressed = pygame.key.get_mods()
 
-        #MOUSE HOLD
-
-        if mouse_right_pressed:
-            self.layer_manager.pan(mouse_delta)
 
         #MOUSE PRESS
 
-        elif event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN:
             #left button
             if event.button == 1:
-                self.tool_manager.start_drawing()
-                self.history_manager.push_history()
+                self.pick_focused_element()
+
                 self.click()
+
+                #not interacting with ui, lets draw
+                if not self.focused_element:
+                    self.tool_manager.start_drawing()
+                    self.history_manager.push_history()
+
+            if event.button == 3:
+                self.pick_focused_element()
+
             #scroll up
             elif event.button == 4:
                 self.layer_manager.upscale()
@@ -107,7 +134,12 @@ class UIManager(object):
         elif event.type == pygame.MOUSEBUTTONUP:
             #left button
             if event.button == 1:
+                self.clear_focused_element()
                 self.tool_manager.stop_drawing()
+
+            #right button
+            if event.button == 3:
+                self.clear_focused_element()
 
         #KEY PRESS
 
@@ -127,4 +159,11 @@ class UIManager(object):
 
         elif event.type == pygame.VIDEORESIZE:
             self.resize_window(event.dict['size'])
+
+        #hold events come after click events so that things happen in order
+        #button in -> button hold -> button out
+        #MOUSE HOLD
+
+        if mouse_right_pressed:
+            self.pan(mouse_delta)
 

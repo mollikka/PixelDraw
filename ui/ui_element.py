@@ -10,15 +10,20 @@ class UIElement(object):
         self.bounding_box = bounding_box
         self.buttons = buttons
 
-    def click(self):
+    def hit(self):
 
         x,y = pygame.mouse.get_pos()
-        if self.bounding_box.collidepoint((x,y)):
-            for button in self.buttons:
-                button.click(offset=self.bounding_box.topleft)
-            return True
-        else:
-            return False
+        return self.bounding_box.collidepoint((x,y))
+
+    def click(self):
+
+        for button in self.buttons:
+            button.click(offset=self.bounding_box.topleft)
+
+    def pan(self, mouse_delta):
+
+        self.bounding_box.left += mouse_delta[0]
+        self.bounding_box.top += mouse_delta[1]
 
     def draw(self, window):
 
