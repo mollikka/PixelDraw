@@ -28,10 +28,7 @@ class UIManager(object):
         self.history_manager = history_manager
 
         self.ui_elements = [
-            LayerDialog(self),
-            ToolDialog(self),
-            ColorPickerButton(self),
-            MenuButton(self),
+            LayerDialog(self, pygame.Rect(300,0,300,200)),
         ]
 
     def resize_window(self, size):
@@ -64,6 +61,11 @@ class UIManager(object):
         #update the screen
         pygame.display.flip()
 
+    def click(self):
+
+            for element in self.ui_elements:
+                if element.click(): break
+
     def handle(self, event):
         '''
             All user input events are caught by the handler which calls other
@@ -92,8 +94,7 @@ class UIManager(object):
             if event.button == 1:
                 self.tool_manager.start_drawing()
                 self.history_manager.push_history()
-                for element in self.ui_elements:
-                    element.click()
+                self.click()
             #scroll up
             elif event.button == 4:
                 self.layer_manager.upscale()

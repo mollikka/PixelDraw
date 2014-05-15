@@ -2,8 +2,7 @@ import pygame
 
 class Button(object):
     '''
-        A general representation of an UI element that can be clicked to do
-        something
+        A button is a part of an UIElement that does something when clicked
     '''
 
     def __init__(self, image_surface, topleft):
@@ -13,12 +12,11 @@ class Button(object):
         self.rect = self.texture.get_rect()
         self.rect.move_ip(topleft)
 
-    def get_rect(self): return self.rect
-
-    def click(self):
+    def click(self, offset = (0,0)):
 
         x,y = pygame.mouse.get_pos()
-        if self.rect.collidepoint((x,y)):
+        x0,y0 = offset
+        if self.rect.collidepoint((x-x0,y-y0)):
             self.activate()
 
     def activate(self):

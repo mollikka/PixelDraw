@@ -1,30 +1,23 @@
 import pygame
 
+from ui.ui_element import UIElement
 from ui.button import Button
 
-class LayerDialog(object):
+class LayerDialog(UIElement):
     '''
         A drawn list of layers that the user can click to pick the one they want
         to edit
     '''
 
-    def __init__(self, ui_manager):
+    def __init__(self, ui_manager, bounding_box):
 
         layer_manager = ui_manager.layer_manager
 
-        self.layerbuttons = []
+        layerbuttons = []
         for i in range(len(layer_manager.layers)):
-            self.layerbuttons.append(LayerButton(i, layer_manager, (500,30+i*20)))
+            layerbuttons.append(LayerButton(i, layer_manager, (0,i*20)))
 
-    def draw(self, window):
-
-        for button in self.layerbuttons:
-            button.draw(window)
-
-    def click(self):
-
-        for button in self.layerbuttons:
-            button.click()
+        super(LayerDialog, self).__init__(bounding_box, layerbuttons)
 
 class LayerButton(Button):
     '''
