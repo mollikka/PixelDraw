@@ -3,35 +3,28 @@ import pygame
 from tools.pen import Pen
 from tools.eraser import Eraser
 from tools.pixel import Pixel
+from ui.ui_element import UIElement
 from ui.button import Button
 
-class ToolDialog(object):
+class ToolDialog(UIElement):
     '''
         A drawn list of tools that the user can click to pick the one they want
         to use
     '''
 
-    def __init__(self, ui_manager):
+    def __init__(self, ui_manager, bounding_box):
 
         tool_manager = ui_manager.tool_manager
 
         load = pygame.image.load
 
-        self.toolbuttons = [
+        buttons = [
             ToolButton(Pen, tool_manager, load('images/pen.png'),(0,0)),
             ToolButton(Eraser, tool_manager, load('images/eraser.png'),(0,50)),
             ToolButton(Pixel, tool_manager, load('images/pixel.png'),(0,100)),
         ]
 
-    def draw(self, window):
-
-        for button in self.toolbuttons:
-            button.draw(window)
-
-    def click(self):
-
-        for button in self.toolbuttons:
-            button.click()
+        super(ToolDialog,self).__init__(bounding_box, buttons)
 
 class ToolButton(Button):
     '''

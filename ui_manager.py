@@ -29,6 +29,7 @@ class UIManager(object):
 
         self.ui_elements = [
             LayerDialog(self, pygame.Rect(300,0,300,200)),
+            ToolDialog(self, pygame.Rect(0,0,50,300)),
         ]
 
     def resize_window(self, size):
