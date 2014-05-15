@@ -5,6 +5,15 @@ from Tkinter import Tk
 from Tkinter import Button as Tkbutton
 from tools.tool import Tool
 from ui.button import Button as Ownbutton
+from ui.ui_element import UIElement
+
+class MenuDialog(UIElement):
+
+    def __init__(self, ui_manager, bounding_box):
+
+        buttons = [MenuButton(ui_manager, (0,0))]
+
+        super(MenuDialog, self).__init__(bounding_box, buttons)
 
 class MenuPopup(object):
 
@@ -48,11 +57,11 @@ class MenuPopup(object):
 
 class MenuButton(Ownbutton):
 
-    def __init__(self, ui_manager):
+    def __init__(self, ui_manager, topleft):
 
-        super(MenuButton, self).__init__(image.load('images/menu.png'),(0,150))
+        super(MenuButton, self).__init__(image.load('images/menu.png'),topleft)
         self.layers = ui_manager.layer_manager
 
-    def activate(self):
+    def activate(self, mouse_position):
 
         MenuPopup(self.layers)
