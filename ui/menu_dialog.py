@@ -4,7 +4,6 @@ from pygame import Surface, image
 from Tkinter import Tk
 from Tkinter import Button as Tkbutton
 from tools.tool import Tool
-from layer_manager import Layer
 from ui.button import Button as Ownbutton
 from ui.ui_element import UIElement
 
