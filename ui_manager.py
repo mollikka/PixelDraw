@@ -4,7 +4,8 @@ import pygame
 #Ideally this should be the only place outside ui folder importing ui
 from ui.tool_dialog import ToolDialog
 from ui.layer_dialog import LayerDialog
-from ui.color_dialog import ColorPickerButton
+from ui.color_dialog import ColorPickerDialog
+from ui.menu import MenuDialog
 
 from ui.menu import MenuButton
 
@@ -28,8 +29,10 @@ class UIManager(object):
         self.history_manager = history_manager
 
         self.ui_elements = [
-            LayerDialog(self, pygame.Rect(300,0,300,200)),
+            LayerDialog(self, pygame.Rect(500,0,300,200)),
             ToolDialog(self, pygame.Rect(0,0,50,300)),
+            ColorPickerDialog(self, pygame.Rect(100,0,320,220)),
+            MenuDialog(self, pygame.Rect(0,320,50,100))
         ]
 
     def resize_window(self, size):

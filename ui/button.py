@@ -17,7 +17,7 @@ class Button(object):
         x,y = pygame.mouse.get_pos()
         x0,y0 = offset
         if self.rect.collidepoint((x-x0,y-y0)):
-            self.activate()
+            self.activate(pos=(x-x0,y-y0))
 
     def activate(self):
         '''For a typical button, just rewrite activate'''
