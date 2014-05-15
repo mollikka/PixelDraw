@@ -5,10 +5,7 @@ import pygame
 from ui.tool_dialog import ToolDialog
 from ui.layer_dialog import LayerDialog
 from ui.color_dialog import ColorPickerDialog
-from ui.menu import MenuDialog
-
-from ui.menu import MenuButton
-
+from ui.menu_dialog import MenuDialog
 
 class UIManager(object):
     '''
