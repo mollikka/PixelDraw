@@ -38,6 +38,6 @@ class ToolButton(Button):
         self.tool_manager = tool_manager
         super(ToolButton, self).__init__(texture, topleft)
 
-    def activate(self):
+    def activate(self, mouse_position):
 
         self.tool_manager.set_tool(self.tool)

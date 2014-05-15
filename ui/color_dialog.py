@@ -35,9 +35,9 @@ class ColorPickerButton(Button):
 
         super(ColorPickerButton, self).__init__(texture, (0,0))
 
-    def activate(self, pos=(0,0)):
+    def activate(self, mouse_position):
 
-        x,y = pos
+        x,y = mouse_position
         color = self.coords_to_color(x,y,self.rect)
         self.color_manager.set_color(color)
 

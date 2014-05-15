@@ -39,6 +39,6 @@ class LayerButton(Button):
 
         super(LayerButton, self).__init__(texture, topleft)
 
-    def activate(self):
+    def activate(self, mouse_position):
 
         self.layer_manager.set_layer(self.layerindex)

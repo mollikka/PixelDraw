@@ -62,6 +62,6 @@ class MenuButton(Ownbutton):
         super(MenuButton, self).__init__(image.load('images/menu.png'),topleft)
         self.layers = ui_manager.layer_manager
 
-    def activate(self):
+    def activate(self, mouse_position):
 
         MenuPopup(self.layers)
