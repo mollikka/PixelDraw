@@ -4,36 +4,50 @@ from pygame import Surface, image
 from Tkinter import Tk
 from Tkinter import Button as Tkbutton
 from tools.tool import Tool
+from layer_manager import Layer
 from ui.button import Button as Ownbutton
 
 class MenuPopup(object):
 
     def __init__(self, layer_manager):
 
-        self.layers = layer_manager
+        self.layer_manager = layer_manager
 
         self.options = {}
         self.options['defaultextension'] = '.png'
         self.options['filetypes'] = [('Portable Network Graphics', '.png'), ('Bitmap', '.bmp'),
             ('Truevision TGA', '.tga'), ('JPEG image', '.jpg'), ('all files', '.*')]
-        self.options['initialfile'] = 'untitled.png'
 
-        menuwindow = Tk()
-        new_file = Tkbutton(menuwindow, text="New file...", command=self.button_action)
-        save = Tkbutton(menuwindow, text="Save as...", command=self.save_as)
-        load = Tkbutton(menuwindow, text="Load file...", command=self.button_action)
+        self.menuwindow = Tk()
+        new_f = Tkbutton(self.menuwindow, text="New file...", command=self.new_file)
+        save = Tkbutton(self.menuwindow, text="Save as...", command=self.save_as)
+        load = Tkbutton(self.menuwindow, text="Load file...", command=self.load)
 
-        new_file.pack()
+        new_f.pack()
         save.pack()
         load.pack()
 
-        menuwindow.focus()
-        menuwindow.mainloop()
+        self.menuwindow.mainloop()
 
-    def button_action(self):
+    def new_file(self):
         pass
 
+    def load(self):
+
+        #get filename
+        filename = tkFileDialog.askopenfilename(**self.options)
+   
+        #load image
+        if filename:
+            surf = image.load(filename)
+            self.layer_manager.new_image(surf)
+            self.menuwindow.destroy()
+
+
     def save_as(self):
+
+        #set default filename
+        self.options['initialfile'] = 'untitled.png'
 
         #get filename
         filename = tkFileDialog.asksaveasfilename(**self.options)
@@ -41,9 +55,10 @@ class MenuPopup(object):
         #saving goes here
         if filename:
             open(filename, 'w')
-            surface = self.layers.background.copy()
-            self.layers.draw_picture(surface)
+            surface = self.layer_manager.background.copy()
+            self.layer_manager.draw_picture(surface)
             image.save(surface, filename)
+            self.menuwindow.destroy()
 
 
 class MenuButton(Ownbutton):

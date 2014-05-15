@@ -13,15 +13,21 @@ class LayerManager(object):
 
     def __init__(self):
 
-        self.bounding_box = pygame.Rect(400,100,800,600)
+        #creating the image with default settings
+        self.new_image(pygame.Surface((800, 600),pygame.SRCALPHA))
 
-        w,h = self.bounding_box.size
+    def new_image(self, surface):
 
-        self.layers = [Layer(self,w,h) for i in range(10)]
+        x,y = surface.get_size()
+
+        self.bounding_box = pygame.Rect(400,100,x,y)
+
+        self.layers = [Layer(self,x,y) for i in range(10)]
+        self.layers[0].surface = surface
         self.curlayer = 0
 
         #background surface is shown if all layers are transparent
-        self.background = pygame.Surface((w,h))
+        self.background = pygame.Surface((x,y))
         self.background.fill((20,20,20))
 
         #camera zoom
