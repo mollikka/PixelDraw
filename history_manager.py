@@ -28,3 +28,7 @@ class HistoryManager(object):
         if len(self.history) > 0:
             oldversion = self.history.pop()
             self.layer_manager.layers = oldversion
+
+    def clear_history(self):
+
+        self.history = []
