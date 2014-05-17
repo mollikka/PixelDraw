@@ -17,9 +17,10 @@ class MenuDialog(UIElement):
 
 class MenuPopup(object):
 
-    def __init__(self, layer_manager):
+    def __init__(self, ui_manager):
 
-        self.layer_manager = layer_manager
+        self.layer_manager = ui_manager.layer_manager
+        self.history_manager = ui_manager.history_manager
 
         self.options = {}
         self.options['defaultextension'] = '.png'
@@ -49,6 +50,7 @@ class MenuPopup(object):
         if filename:
             surf = image.load(filename)
             self.layer_manager.new_image(surf)
+            self.history_manager.clear_history()
             self.menuwindow.destroy()
 
 
@@ -74,8 +76,8 @@ class MenuButton(Ownbutton):
     def __init__(self, ui_manager, topleft):
 
         super(MenuButton, self).__init__(image.load('images/menu.png'),topleft)
-        self.layers = ui_manager.layer_manager
+        self.ui_manager = ui_manager
 
     def activate(self, mouse_position):
 
-        MenuPopup(self.layers)
+        MenuPopup(self.ui_manager)
