@@ -31,7 +31,7 @@ class UIManager(object):
             ToolDialog(self, pygame.Rect(0,0,50,300)),
             ColorPickerDialog(self, pygame.Rect(100,0,320,220)),
             MenuDialog(self, pygame.Rect(0,320,50,100)),
-            MinimapDialog(self, pygame.Rect(200,200,100,100)),
+            MinimapDialog(self, pygame.Rect(200,200,120,120)),
         ]
 
         self.focused_element = None
