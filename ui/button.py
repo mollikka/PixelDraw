@@ -15,8 +15,11 @@ class Button(object):
     def click(self, offset = (0,0)):
 
         x,y = pygame.mouse.get_pos()
-        x0,y0 = offset
+        x0,y0 = offset #panel-to-world offset
+        
         if self.rect.collidepoint((x-x0,y-y0)):
+            x0 += self.rect.top #button-to-panel offset
+            y0 += self.rect.left
             self.activate((x-x0,y-y0))
 
     def activate(self, mouse_position):
