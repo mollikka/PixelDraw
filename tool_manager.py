@@ -15,15 +15,3 @@ class ToolManager(object):
     def get_tool(self): return self.tool
 
     def set_tool(self, newValue): self.tool = newValue
-
-    def step(self, layer, color):
-
-        self.tool.step(layer, color)
-
-    def start_drawing(self):
-
-        self.tool.start_drawing()
-
-    def stop_drawing(self):
-
-        self.tool.stop_drawing()

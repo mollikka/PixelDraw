@@ -33,7 +33,7 @@ class System(object):
             self.ui_manager.handle(event)
 
         #tools need a step to draw things
-        self.tool_manager.step(layer, color)
+        tool.step(layer, color)
 
         #ask ui manager to draw the user interface
         self.ui_manager.draw()

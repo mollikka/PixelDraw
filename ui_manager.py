@@ -113,7 +113,7 @@ class UIManager(object):
 
                 #not interacting with ui, lets draw
                 if not self.focused_element:
-                    self.tool_manager.start_drawing()
+                    self.tool_manager.get_tool().start_drawing()
                     self.history_manager.push_history()
 
             if event.button == 3:
@@ -131,7 +131,7 @@ class UIManager(object):
             #left button
             if event.button == 1:
                 self.clear_focused_element()
-                self.tool_manager.stop_drawing()
+                self.tool_manager.get_tool().stop_drawing()
 
             #right button
             if event.button == 3:
