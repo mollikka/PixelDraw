@@ -27,7 +27,7 @@ class UIManager(object):
         self.history_manager = history_manager
 
         self.ui_elements = [
-            LayerDialog(self, pygame.Rect(500,0,300,200)),
+            LayerDialog(self, pygame.Rect(500,0,200,230)),
             ToolDialog(self, pygame.Rect(0,0,50,300)),
             ColorPickerDialog(self, pygame.Rect(100,0,320,220)),
             MenuDialog(self, pygame.Rect(0,320,50,100)),
@@ -56,12 +56,6 @@ class UIManager(object):
         #draw the ui elements
         for element in self.ui_elements:
             element.draw(self.window)
-
-        #show the current layer (this is a hack)
-        myfont = pygame.font.SysFont("monospace", 15)
-        pygame.draw.rect(self.window, (255,255,255), pygame.Rect(500,0,200,20))
-        label = myfont.render("Current layer {}".format(self.layer_manager.curlayer), 1, (0,0,0))
-        self.window.blit(label, (500,0))
 
         #update the screen
         pygame.display.flip()

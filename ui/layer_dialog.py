@@ -14,10 +14,27 @@ class LayerDialog(UIElement):
         layer_manager = ui_manager.layer_manager
 
         layerbuttons = []
+        layerbuttons.append(CurrentLayerButton(ui_manager, (0,0)))
         for i in range(len(layer_manager.layers)):
-            layerbuttons.append(LayerButton(i, layer_manager, (0,i*20)))
+            layerbuttons.append(LayerButton(i, layer_manager, (0,(i+1)*20)))
 
         super(LayerDialog, self).__init__(bounding_box, layerbuttons)
+
+class CurrentLayerButton(Button):
+
+    def __init__(self, ui_manager, topleft):
+
+        self.layer_manager = ui_manager.layer_manager
+        texture = pygame.Surface((200,20))
+        super(CurrentLayerButton, self).__init__(texture, topleft)
+
+    def draw(self, window):
+
+        #show the current layer
+        myfont = pygame.font.SysFont("monospace", 15)
+        pygame.draw.rect(window, (255,255,255), pygame.Rect(0,0,200,20))
+        label = myfont.render("Current layer {}".format(self.layer_manager.curlayer), 1, (0,0,0))
+        window.blit(label, (0,0))
 
 class LayerButton(Button):
     '''
