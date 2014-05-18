@@ -5,10 +5,6 @@ class LayerManager(object):
         A LayerManager sets up a system of layers that can store pictures and
         be drawn on. Basically, it's a representation of the piece of art
         that's being worked on.
-
-        Most tools and other picture manipulation effects should use
-        LayerManager().get_layer().get_surface() to get the pygame surface to
-        alter
     '''
 
     def __init__(self):
@@ -112,7 +108,7 @@ class LayerManager(object):
         spic_topleft = self.screen_pos_to_picture((0,0))
         spic_botright = self.screen_pos_to_picture(window.get_size())
         spic_size = [spic_botright[i] - spic_topleft[i] +1 for i in range(2)] #+1 because that prevents a < 1 pixel gap from being drawn when zoomed
-        #create a surface that is fills the screen in picture coordinates
+        #create a surface that fills the screen in picture coordinates
         spic = pygame.Surface(spic_size, pygame.SRCALPHA)
         spic.blit(pic, pos)
 
@@ -122,10 +118,7 @@ class LayerManager(object):
         window.blit(scaledpic, (0,0))
 
     def pan(self, mouse_delta):
-        '''
-            Input handling event for panning the picture,
-            called by handle_input
-        '''
+
         scale = self.picture_scale
 
         self.bounding_box.left += mouse_delta[0]/float(scale)
