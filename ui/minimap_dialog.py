@@ -23,6 +23,16 @@ class MinimapButton(Button):
         texture = pygame.Surface((100,100))
         super(MinimapButton, self).__init__(texture, topleft)
 
+    def activate(self, mouse_position):
+
+        x,y = mouse_position
+
+        image_center = self.layer_manager.bounding_box.center
+        
+        new_viewpos = [image_center[0] - x +50, image_center[1] - y +50]
+
+        self.layer_manager.bounding_box.center = new_viewpos
+
     def draw(self, surface):
 
         surf= pygame.Surface(self.layer_manager.bounding_box.size)
