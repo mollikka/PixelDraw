@@ -27,6 +27,7 @@ class LayerManager(object):
         self.background.fill((20,20,20))
 
         #camera zoom
+        self.panning_delta = [0.0,0.0]
         self.picture_scale = 1
         self.maxscale = 64
 
@@ -121,8 +122,14 @@ class LayerManager(object):
 
         scale = self.picture_scale
 
-        self.bounding_box.left += mouse_delta[0]/float(scale)
-        self.bounding_box.top += mouse_delta[1]/float(scale)
+        self.panning_delta[0] += mouse_delta[0]/float(scale)
+        self.panning_delta[1] += mouse_delta[1]/float(scale)
+        
+        self.bounding_box.left += int(self.panning_delta[0])
+        self.bounding_box.top += int(self.panning_delta[1])
+        
+        self.panning_delta[0] -= int(self.panning_delta[0])
+        self.panning_delta[1] -= int(self.panning_delta[1])
 
 class Layer(object):
     '''
