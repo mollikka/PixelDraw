@@ -11,6 +11,7 @@ class LayerManager(object):
 
         #creating the image with default settings
         self.new_image(pygame.Surface((800, 600),pygame.SRCALPHA))
+        self.draw_grid = False
 
     def new_image(self, surface):
 
@@ -38,6 +39,8 @@ class LayerManager(object):
     def set_layer(self, layer_index):
 
         self.curlayer = layer_index
+
+    def toggle_draw_grid(self): self.draw_grid = not self.draw_grid
 
     def draw_picture(self, surface):
         '''
@@ -116,6 +119,16 @@ class LayerManager(object):
         #create an upscaled surface that will actually fill the screen
         spic_size_scaled = [spic_size[i]*scale for i in range(2)]
         scaledpic = pygame.transform.scale(spic, spic_size_scaled)
+
+        if scale > 2 and self.draw_grid:
+
+            maxx = window.get_size()[0]
+            maxy = window.get_size()[1]
+            for x in range(0,maxx,scale):
+                pygame.draw.line(scaledpic, (32,32,32), (x,0), (x,maxy))
+            for y in range(0,maxy,scale):
+                pygame.draw.line(scaledpic, (32,32,32), (0,y), (maxx,y))
+
         window.blit(scaledpic, (0,0))
 
     def pan(self, mouse_delta):

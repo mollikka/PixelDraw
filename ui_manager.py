@@ -142,7 +142,8 @@ class UIManager(object):
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 sys.exit(0)
-                
+            if event.key == pygame.K_g:
+                self.layer_manager.toggle_draw_grid()
             #ctrl modifier
             if mod_pressed & pygame.KMOD_CTRL:
                 if event.key == pygame.K_z:
