@@ -5,6 +5,7 @@ from tools.eraser import Eraser
 from tools.pixel import Pixel
 from ui.ui_element import UIElement
 from ui.button import Button
+from ui import BUTTON_SIZE
 
 class ToolDialog(UIElement):
     '''
@@ -12,19 +13,27 @@ class ToolDialog(UIElement):
         to use
     '''
 
-    def __init__(self, ui_manager, bounding_box):
+    def __init__(self, ui_manager, topleft, vertical=False):
 
         tool_manager = ui_manager.tool_manager
 
         load = pygame.image.load
 
-        buttons = [
-            ToolButton(Pen, tool_manager, load('images/pen.png'),(0,0)),
-            ToolButton(Eraser, tool_manager, load('images/eraser.png'),(0,50)),
-            ToolButton(Pixel, tool_manager, load('images/pixel.png'),(0,100)),
-        ]
+        tools = [(Pen,'images/pen.png'),
+                 (Eraser, 'images/eraser.png'),
+                 (Pixel, 'images/pixel.png'),]
+        
+        buttons = []
+        for i,tool in enumerate(tools):
+            if vertical: pos = (0,BUTTON_SIZE*i)
+            else: pos = (BUTTON_SIZE*i,0)
+            
+            buttons.append(ToolButton(tool[0], tool_manager, load(tool[1]),pos))
 
-        super(ToolDialog,self).__init__(bounding_box, buttons)
+        if vertical: size = (BUTTON_SIZE,BUTTON_SIZE*len(buttons))
+        else: size = (BUTTON_SIZE*len(buttons),BUTTON_SIZE)
+
+        super(ToolDialog,self).__init__(pygame.Rect(topleft[0],topleft[1],size[0],size[1]), buttons)
 
 class ToolButton(Button):
     '''

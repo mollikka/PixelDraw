@@ -1,19 +1,29 @@
 import tkFileDialog
 
-from pygame import Surface, image
+from pygame import Surface, image, Rect
 from Tkinter import Tk
 from Tkinter import Button as Tkbutton
 from tools.tool import Tool
 from ui.button import Button as Ownbutton
 from ui.ui_element import UIElement
+from ui import BUTTON_SIZE
 
 class MenuDialog(UIElement):
 
-    def __init__(self, ui_manager, bounding_box):
+    def __init__(self, ui_manager, topleft, vertical=False):
 
-        buttons = [MenuButton(ui_manager, (0,0))]
+        button_classes = [MenuButton]
 
-        super(MenuDialog, self).__init__(bounding_box, buttons)
+        buttons = []
+        for i,button in enumerate(button_classes):
+            if vertical: pos = (0,BUTTON_SIZE*i)
+            else: pos = (BUTTON_SIZE*i,0)
+            buttons.append(button(ui_manager, pos))
+
+        if vertical: size = (BUTTON_SIZE,BUTTON_SIZE*len(buttons))
+        else: size = (BUTTON_SIZE*len(buttons),BUTTON_SIZE)
+
+        super(MenuDialog, self).__init__( Rect(topleft[0],topleft[1],size[0],size[1]), buttons)
 
 class MenuPopup(object):
 

@@ -7,11 +7,11 @@ from ui.button import Button
 
 class ColorPickerDialog(UIElement):
 
-    def __init__(self, ui_manager, bounding_box):
+    def __init__(self, ui_manager, topleft):
 
         buttons = [ColorPickerButton(ui_manager)]
 
-        super(ColorPickerDialog, self).__init__(bounding_box, buttons)
+        super(ColorPickerDialog, self).__init__(pygame.Rect(topleft[0],topleft[1],320,220), buttons)
 
 class ColorPickerButton(Button):
     '''

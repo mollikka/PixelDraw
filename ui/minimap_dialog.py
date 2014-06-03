@@ -5,22 +5,23 @@ from ui.button import Button
 
 class MinimapDialog(UIElement):
 
-    def __init__(self, ui_manager, bounding_box):
+    def __init__(self, ui_manager, topleft, size):
 
         buttons = [
-            MinimapButton(ui_manager,(10,10)),
+            MinimapButton(ui_manager,(10,10),size),
         ]
 
-        super(MinimapDialog,self).__init__(bounding_box, buttons)
+        super(MinimapDialog,self).__init__(pygame.Rect(topleft[0],topleft[1],size[0],size[1]), buttons)
 
 class MinimapButton(Button):
 
-    def __init__(self, ui_manager, topleft):
+    def __init__(self, ui_manager, topleft, size):
 
         self.layer_manager = ui_manager.layer_manager
         self.ui_manager = ui_manager
         
-        texture = pygame.Surface((100,100))
+        self.midpoint = size[0]/2 -10, size[1]/2 - 10
+        texture = pygame.Surface((self.midpoint[0]*2,self.midpoint[1]*2))
         super(MinimapButton, self).__init__(texture, topleft)
 
     def activate(self, mouse_position):
@@ -29,7 +30,7 @@ class MinimapButton(Button):
 
         image_center = self.layer_manager.bounding_box.center
         
-        new_viewpos = [image_center[0] - x +50, image_center[1] - y +50]
+        new_viewpos = [image_center[0] - x + self.midpoint[0], image_center[1] - y + self.midpoint[1]]
 
         self.layer_manager.bounding_box.center = new_viewpos
 
@@ -44,7 +45,7 @@ class MinimapButton(Button):
         viewhalf = self.layer_manager.screen_pos_to_picture(winhalf)
 
         picpos = self.layer_manager.bounding_box.topleft
-        minimappos = [-viewhalf[i] + 50 for i in range(2)]
+        minimappos = [-viewhalf[0] + self.midpoint[0], -viewhalf[1] + self.midpoint[1]]
 
         self.texture.fill((128,0,0))
         self.texture.blit(surf, minimappos)
