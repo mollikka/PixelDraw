@@ -9,7 +9,7 @@ class LayerDialog(UIElement):
         to edit
     '''
 
-    def __init__(self, ui_manager, topleft):
+    def __init__(self, ui_manager, anchor, topleft):
 
         layer_manager = ui_manager.layer_manager
 
@@ -18,7 +18,7 @@ class LayerDialog(UIElement):
         for i in range(len(layer_manager.layers)):
             layerbuttons.append(LayerButton(i, layer_manager, (0,(i+1)*20)))
 
-        super(LayerDialog, self).__init__(pygame.Rect(topleft[0],topleft[1],200,230), layerbuttons)
+        super(LayerDialog, self).__init__(pygame.Rect(topleft[0],topleft[1],200,(i+2)*20), layerbuttons, anchor)
 
 class CurrentLayerButton(Button):
 

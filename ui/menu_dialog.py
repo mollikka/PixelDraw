@@ -10,7 +10,7 @@ from ui import BUTTON_SIZE
 
 class MenuDialog(UIElement):
 
-    def __init__(self, ui_manager, topleft, vertical=False):
+    def __init__(self, ui_manager, anchor, topleft, vertical=False):
 
         button_classes = [MenuButton]
 
@@ -23,7 +23,7 @@ class MenuDialog(UIElement):
         if vertical: size = (BUTTON_SIZE,BUTTON_SIZE*len(buttons))
         else: size = (BUTTON_SIZE*len(buttons),BUTTON_SIZE)
 
-        super(MenuDialog, self).__init__( Rect(topleft[0],topleft[1],size[0],size[1]), buttons)
+        super(MenuDialog, self).__init__( Rect(topleft[0],topleft[1],size[0],size[1]), buttons, anchor)
 
 class MenuPopup(object):
 

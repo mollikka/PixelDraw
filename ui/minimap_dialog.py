@@ -5,13 +5,13 @@ from ui.button import Button
 
 class MinimapDialog(UIElement):
 
-    def __init__(self, ui_manager, topleft, size):
+    def __init__(self, ui_manager, anchor, topleft, size):
 
         buttons = [
             MinimapButton(ui_manager,(10,10),size),
         ]
 
-        super(MinimapDialog,self).__init__(pygame.Rect(topleft[0],topleft[1],size[0],size[1]), buttons)
+        super(MinimapDialog,self).__init__(pygame.Rect(topleft[0],topleft[1],size[0],size[1]), buttons, anchor)
 
 class MinimapButton(Button):
 

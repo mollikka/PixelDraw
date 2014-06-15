@@ -13,7 +13,7 @@ class ToolDialog(UIElement):
         to use
     '''
 
-    def __init__(self, ui_manager, topleft, vertical=False):
+    def __init__(self, ui_manager, anchor, topleft, vertical=False):
 
         tool_manager = ui_manager.tool_manager
 
@@ -33,7 +33,7 @@ class ToolDialog(UIElement):
         if vertical: size = (BUTTON_SIZE,BUTTON_SIZE*len(buttons))
         else: size = (BUTTON_SIZE*len(buttons),BUTTON_SIZE)
 
-        super(ToolDialog,self).__init__(pygame.Rect(topleft[0],topleft[1],size[0],size[1]), buttons)
+        super(ToolDialog,self).__init__(pygame.Rect(topleft[0],topleft[1],size[0],size[1]), buttons, anchor)
 
 class ToolButton(Button):
     '''

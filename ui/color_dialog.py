@@ -7,22 +7,22 @@ from ui.button import Button
 
 class ColorPickerDialog(UIElement):
 
-    def __init__(self, ui_manager, topleft):
+    def __init__(self, ui_manager, anchor, topleft, size):
 
-        buttons = [ColorPickerButton(ui_manager)]
+        buttons = [ColorPickerButton(ui_manager, size)]
 
-        super(ColorPickerDialog, self).__init__(pygame.Rect(topleft[0],topleft[1],320,220), buttons)
+        super(ColorPickerDialog, self).__init__(pygame.Rect(topleft[0],topleft[1],size[0],size[1]), buttons, anchor)
 
 class ColorPickerButton(Button):
     '''
         A palette that sets the active color to the one user clicked on
     '''
 
-    def __init__(self, ui_manager):
+    def __init__(self, ui_manager, size):
 
         self.color_manager = ui_manager.color_manager
 
-        w,h = 300,200
+        w,h = size
 
         texture = pygame.Surface((w,h))
         bounding_box = pygame.Rect(0,0,w,h)
