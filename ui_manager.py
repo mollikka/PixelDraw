@@ -45,7 +45,8 @@ class UIManager(object):
 
         #draw the ui elements
         for element in self.ui_elements:
-            element.draw(self.window)
+            off = element.get_anchor_offset(self.window)
+            element.draw(self.window, offset=off)
 
         #update the screen
         pygame.display.flip()
@@ -53,7 +54,8 @@ class UIManager(object):
     def click(self):
 
         if self.focused_element:
-            self.focused_element.click()
+            off = self.focused_element.get_anchor_offset(self.window)
+            self.focused_element.click(offset = off)
 
     def pan(self, mouse_delta):
 
@@ -65,7 +67,8 @@ class UIManager(object):
     def pick_focused_element(self):
 
         for element in reversed(self.ui_elements):
-            if element.hit(): 
+            off = element.get_anchor_offset(self.window)
+            if element.hit(off):
                 self.focused_element = element
                 return
 
