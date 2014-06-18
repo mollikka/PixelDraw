@@ -12,7 +12,7 @@ class MenuDialog(UIElement):
 
     def __init__(self, ui_manager, anchor, topleft, vertical=False):
 
-        button_classes = [MenuButton]
+        button_classes = [NewButton, SaveButton, LoadButton]
 
         buttons = []
         for i,button in enumerate(button_classes):
@@ -25,9 +25,9 @@ class MenuDialog(UIElement):
 
         super(MenuDialog, self).__init__( Rect(topleft[0],topleft[1],size[0],size[1]), buttons, anchor)
 
-class MenuPopup(object):
+class MenuButton(Ownbutton):
 
-    def __init__(self, ui_manager):
+    def __init__(self, ui_manager, texture, topleft):
 
         self.layer_manager = ui_manager.layer_manager
         self.history_manager = ui_manager.history_manager
@@ -37,16 +37,9 @@ class MenuPopup(object):
         self.options['filetypes'] = [('Portable Network Graphics', '.png'), ('Bitmap', '.bmp'),
             ('Truevision TGA', '.tga'), ('JPEG image', '.jpg'), ('all files', '.*')]
 
-        self.menuwindow = Tk()
-        new_f = Tkbutton(self.menuwindow, text="New file...", command=self.new_file)
-        save = Tkbutton(self.menuwindow, text="Save as...", command=self.save_as)
-        load = Tkbutton(self.menuwindow, text="Load file...", command=self.load)
-
-        new_f.pack()
-        save.pack()
-        load.pack()
-
-        self.menuwindow.mainloop()
+        super(MenuButton, self).__init__(texture,topleft)
+        root = Tk()
+        root.withdraw()
 
     def new_file(self):
         pass
@@ -61,7 +54,6 @@ class MenuPopup(object):
             surf = image.load(filename)
             self.layer_manager.new_image(surf)
             self.history_manager.clear_history()
-            self.menuwindow.destroy()
 
 
     def save_as(self):
@@ -81,13 +73,32 @@ class MenuPopup(object):
             self.menuwindow.destroy()
 
 
-class MenuButton(Ownbutton):
+class NewButton(MenuButton):
 
     def __init__(self, ui_manager, topleft):
 
-        super(MenuButton, self).__init__(image.load('images/menu.png'),topleft)
-        self.ui_manager = ui_manager
+        super(NewButton, self).__init__(ui_manager, image.load('images/new_file.png'),topleft)
 
     def activate(self, mouse_position):
 
-        MenuPopup(self.ui_manager)
+        self.new_file()
+
+class SaveButton(MenuButton):
+
+    def __init__(self, ui_manager, topleft):
+
+        super(SaveButton, self).__init__(ui_manager, image.load('images/save_file.png'),topleft)
+
+    def activate(self, mouse_position):
+
+        self.save_as()
+
+class LoadButton(MenuButton):
+
+    def __init__(self, ui_manager, topleft):
+
+        super(LoadButton, self).__init__(ui_manager, image.load('images/load_file.png'),topleft)
+
+    def activate(self, mouse_position):
+
+        self.load()
