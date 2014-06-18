@@ -1,12 +1,14 @@
 import tkFileDialog
 
-from pygame import Surface, image, Rect
-from Tkinter import Tk
+import pygame
+from pygame import image, Rect
+from Tkinter import Tk, Entry, Label, Toplevel
 from Tkinter import Button as Tkbutton
 from tools.tool import Tool
 from ui.button import Button as Ownbutton
 from ui.ui_element import UIElement
 from ui import BUTTON_SIZE
+
 
 class MenuDialog(UIElement):
 
@@ -38,11 +40,44 @@ class MenuButton(Ownbutton):
             ('Truevision TGA', '.tga'), ('JPEG image', '.jpg'), ('all files', '.*')]
 
         super(MenuButton, self).__init__(texture,topleft)
-        root = Tk()
-        root.withdraw()
+        self.root = Tk()
+        self.root.withdraw()
 
     def new_file(self):
-        pass
+
+        self.res_dialog = Tk()
+
+        self.wbox = Entry(self.res_dialog)
+        self.hbox = Entry(self.res_dialog)
+
+        wlabel = Label(self.res_dialog, text="Width: ")
+        hlabel = Label(self.res_dialog, text="Height: ")
+        
+        ok = Tkbutton(self.res_dialog, text="OK", command=self.ok)
+        cancel = Tkbutton(self.res_dialog, text="Cancel", command=self.cancel)
+
+        wlabel.pack()
+        self.wbox.pack()
+        hlabel.pack()
+        self.hbox.pack()
+        ok.pack()
+        cancel.pack()
+
+        self.res_dialog.mainloop()
+
+    def ok(self):
+
+        w = int(self.wbox.get())
+        h = int(self.hbox.get())
+
+        surface = pygame.Surface((w,h), pygame.SRCALPHA)
+        self.layer_manager.new_image(surface)
+
+        self.res_dialog.destroy()
+
+    def cancel(self):
+
+        self.res_dialog.destroy()
 
     def load(self):
 
@@ -51,10 +86,9 @@ class MenuButton(Ownbutton):
    
         #load image
         if filename:
-            surf = image.load(filename)
+            surf = pygame.image.load(filename)
             self.layer_manager.new_image(surf)
             self.history_manager.clear_history()
-
 
     def save_as(self):
 
@@ -69,8 +103,7 @@ class MenuButton(Ownbutton):
             open(filename, 'w')
             surface = self.layer_manager.background.copy()
             self.layer_manager.draw_picture(surface)
-            image.save(surface, filename)
-            self.menuwindow.destroy()
+            pygame.image.save(surface, filename)
 
 
 class NewButton(MenuButton):
