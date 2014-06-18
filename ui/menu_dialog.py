@@ -14,6 +14,10 @@ class MenuDialog(UIElement):
 
     def __init__(self, ui_manager, anchor, topleft, vertical=False):
 
+        global root
+        root = Tk()
+        root.withdraw()
+
         button_classes = [NewButton, SaveButton, LoadButton]
 
         buttons = []
@@ -35,26 +39,25 @@ class MenuButton(Ownbutton):
         self.history_manager = ui_manager.history_manager
 
         self.options = {}
+        self.options['parent'] = root
         self.options['defaultextension'] = '.png'
         self.options['filetypes'] = [('Portable Network Graphics', '.png'), ('Bitmap', '.bmp'),
             ('Truevision TGA', '.tga'), ('JPEG image', '.jpg'), ('all files', '.*')]
 
         super(MenuButton, self).__init__(texture,topleft)
-        self.root = Tk()
-        self.root.withdraw()
 
     def new_file(self):
 
-        self.res_dialog = Tk()
+        self.dialog = Tk()
 
-        self.wbox = Entry(self.res_dialog)
-        self.hbox = Entry(self.res_dialog)
+        self.wbox = Entry(self.dialog)
+        self.hbox = Entry(self.dialog)
 
-        wlabel = Label(self.res_dialog, text="Width: ")
-        hlabel = Label(self.res_dialog, text="Height: ")
+        wlabel = Label(self.dialog, text="Width: ")
+        hlabel = Label(self.dialog, text="Height: ")
         
-        ok = Tkbutton(self.res_dialog, text="OK", command=self.ok)
-        cancel = Tkbutton(self.res_dialog, text="Cancel", command=self.cancel)
+        ok = Tkbutton(self.dialog, text="OK", command=self.ok)
+        cancel = Tkbutton(self.dialog, text="Cancel", command=self.cancel)
 
         wlabel.pack()
         self.wbox.pack()
@@ -63,7 +66,7 @@ class MenuButton(Ownbutton):
         ok.pack()
         cancel.pack()
 
-        self.res_dialog.mainloop()
+        self.dialog.mainloop()
 
     def ok(self):
 
@@ -73,11 +76,11 @@ class MenuButton(Ownbutton):
         surface = pygame.Surface((w,h), pygame.SRCALPHA)
         self.layer_manager.new_image(surface)
 
-        self.res_dialog.destroy()
+        self.dialog.destroy()
 
     def cancel(self):
 
-        self.res_dialog.destroy()
+        self.dialog.destroy()
 
     def load(self):
 
@@ -97,7 +100,7 @@ class MenuButton(Ownbutton):
 
         #get filename
         filename = tkFileDialog.asksaveasfilename(**self.options)
- 
+
         #saving goes here
         if filename:
             open(filename, 'w')
