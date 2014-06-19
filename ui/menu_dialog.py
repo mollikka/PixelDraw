@@ -9,14 +9,13 @@ from ui.button import Button as Ownbutton
 from ui.ui_element import UIElement
 from ui import BUTTON_SIZE
 
+global ROOT
+ROOT = Tk()
+ROOT.withdraw()
 
 class MenuDialog(UIElement):
 
     def __init__(self, ui_manager, anchor, topleft, vertical=False):
-
-        global root
-        root = Tk()
-        root.withdraw()
 
         button_classes = [NewButton, SaveButton, LoadButton]
 
@@ -39,7 +38,6 @@ class MenuButton(Ownbutton):
         self.history_manager = ui_manager.history_manager
 
         self.options = {}
-        self.options['parent'] = root
         self.options['defaultextension'] = '.png'
         self.options['filetypes'] = [('Portable Network Graphics', '.png'), ('Bitmap', '.bmp'),
             ('Truevision TGA', '.tga'), ('JPEG image', '.jpg'), ('all files', '.*')]
@@ -48,39 +46,7 @@ class MenuButton(Ownbutton):
 
     def new_file(self):
 
-        self.dialog = Tk()
-
-        self.wbox = Entry(self.dialog)
-        self.hbox = Entry(self.dialog)
-
-        wlabel = Label(self.dialog, text="Width: ")
-        hlabel = Label(self.dialog, text="Height: ")
-        
-        ok = Tkbutton(self.dialog, text="OK", command=self.ok)
-        cancel = Tkbutton(self.dialog, text="Cancel", command=self.cancel)
-
-        wlabel.pack()
-        self.wbox.pack()
-        hlabel.pack()
-        self.hbox.pack()
-        ok.pack()
-        cancel.pack()
-
-        self.dialog.mainloop()
-
-    def ok(self):
-
-        w = int(self.wbox.get())
-        h = int(self.hbox.get())
-
-        surface = pygame.Surface((w,h), pygame.SRCALPHA)
-        self.layer_manager.new_image(surface)
-
-        self.dialog.destroy()
-
-    def cancel(self):
-
-        self.dialog.destroy()
+        NewFilePopup(self.layer_manager, self.history_manager)
 
     def load(self):
 
@@ -138,3 +104,57 @@ class LoadButton(MenuButton):
     def activate(self, mouse_position):
 
         self.load()
+
+
+
+class NewFilePopup(object):
+
+    def __init__(self, layer_manager ,history_manager):
+
+        self.layer_manager = layer_manager
+        self.history_manager = history_manager
+
+        self.dialog = Toplevel(ROOT)
+
+        self.wbox = Entry(self.dialog)
+        self.hbox = Entry(self.dialog)
+
+        wlabel = Label(self.dialog, text="Width: ")
+        hlabel = Label(self.dialog, text="Height: ")
+        
+        ok = Tkbutton(self.dialog, text="OK", command=self.ok)
+        cancel = Tkbutton(self.dialog, text="Cancel", command=self.cancel)
+
+        wlabel.pack()
+        self.wbox.pack()
+        hlabel.pack()
+        self.hbox.pack()
+        ok.pack()
+        cancel.pack()
+
+        self.dialog.protocol('WM_DELETE_WINDOW', self.cancel)
+
+
+        self.dialog.mainloop()
+
+    def ok(self):
+
+        w = int(self.wbox.get())
+        h = int(self.hbox.get())
+
+        surface = pygame.Surface((w,h), pygame.SRCALPHA)
+        self.layer_manager.new_image(surface)
+
+        self.dialog.destroy()
+        global ROOT
+        ROOT.quit()
+        ROOT = Tk()
+        ROOT.withdraw()
+
+    def cancel(self):
+
+        self.dialog.destroy()
+        global ROOT
+        ROOT.quit()
+        ROOT = Tk()
+        ROOT.withdraw()
