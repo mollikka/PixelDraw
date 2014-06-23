@@ -9,9 +9,20 @@ from ui.button import Button as Ownbutton
 from ui.ui_element import UIElement
 from ui import BUTTON_SIZE
 
-global ROOT
-ROOT = Tk()
-ROOT.withdraw()
+#this popup stuff should be moved to its own module if more
+##popups are developed
+def init_popups():
+    ROOT = Tk()
+    ROOT.withdraw()
+    return ROOT
+
+def clear_popup(dialog, ROOT):
+    dialog.destroy()
+    ROOT.quit()
+    ROOT = Tk()
+    ROOT.withdraw()
+
+ROOT = init_popups()
 
 class MenuDialog(UIElement):
 
@@ -145,16 +156,10 @@ class NewFilePopup(object):
         surface = pygame.Surface((w,h), pygame.SRCALPHA)
         self.layer_manager.new_image(surface)
 
-        self.dialog.destroy()
         global ROOT
-        ROOT.quit()
-        ROOT = Tk()
-        ROOT.withdraw()
+        clear_popup(self.dialog, ROOT)
 
     def cancel(self):
 
-        self.dialog.destroy()
         global ROOT
-        ROOT.quit()
-        ROOT = Tk()
-        ROOT.withdraw()
+        clear_popup(self.dialog, ROOT)
